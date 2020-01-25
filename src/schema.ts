@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 
 import sampleController from './controllers/sample';
-import SampleType from './types/sample';
+import SampleType from './types/users';
 
 const query = new GraphQLObjectType({
   name: 'Query',
