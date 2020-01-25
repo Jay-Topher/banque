@@ -33,6 +33,14 @@ const userType = new GraphQLObjectType({
       type: GraphQLString,
       description: 'The password of the user',
     },
+    createdAt: {
+      type: GraphQLString,
+      description: 'The date the contact was created',
+    },
+    updatedAt: {
+      type: GraphQLString,
+      description: 'The last time the contact info was updated',
+    },
   }),
 });
 
