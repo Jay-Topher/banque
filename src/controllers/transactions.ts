@@ -35,3 +35,23 @@ export const viewTransactions = async () => {
   }
 };
 
+/**
+ * View all transactions by a user
+ * @param userId - The ID of the user who's transactions you want to see
+ * @returns - An array of transactions by the user.
+ */
+export const viewTransactionsByUser = async (userId: string) => {
+  try {
+    const transactions = await Transactions.find({ id: userId });
+
+    if (!transactions) {
+      throw Error('Transaction does not exist');
+    }
+
+    return transactions;
+  } catch (err) {
+    console.error('Could not get transactions');
+    throw Error(err.message);
+  }
+};
+
