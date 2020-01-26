@@ -62,3 +62,29 @@ router.post('/:userId', async (req, res) => {
   }
 });
 
+// view transactions by a user
+router.get('/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  if (!userId) {
+    res.status(400).json({ msg: 'Invalid url' });
+
+    return;
+  }
+
+  const doc = await viewTransactionsByUser(userId);
+
+  if (!doc) {
+    res.status(400).json({ msg: 'No transactions yet' });
+
+    return;
+  }
+
+  res.status(200).json({ doc });
+
+  return;
+});
+
+// // view a transaction
+// router.get('/:transactionId', async (req, res) => {});
+
+export default router;
