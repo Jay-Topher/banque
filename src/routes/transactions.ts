@@ -19,8 +19,14 @@ router.get('/', async (_req, res) => {
 
       return;
     }
+
+    res.status(200).json({ doc });
+
+    return;
   } catch (err) {
     res.status(500).json({ err: err.message });
+
+    return;
   }
 });
 
@@ -59,6 +65,8 @@ router.post('/:userId', async (req, res) => {
     return;
   } catch (err) {
     res.status(500).json({ err: err.message });
+
+    return;
   }
 });
 
@@ -71,17 +79,23 @@ router.get('/:userId', async (req, res) => {
     return;
   }
 
-  const doc = await viewTransactionsByUser(userId);
+  try {
+    const doc = await viewTransactionsByUser(userId);
 
-  if (!doc) {
-    res.status(400).json({ msg: 'No transactions yet' });
+    if (!doc) {
+      res.status(400).json({ msg: 'No transactions yet' });
+
+      return;
+    }
+
+    res.status(200).json({ doc });
+
+    return;
+  } catch (err) {
+    res.status(500).json({ err: err.message });
 
     return;
   }
-
-  res.status(200).json({ doc });
-
-  return;
 });
 
 // view a transaction
@@ -93,17 +107,23 @@ router.get('/:transactionId', async (req, res) => {
     return;
   }
 
-  const doc = await viewATransaction(transactionId);
+  try {
+    const doc = await viewATransaction(transactionId);
 
-  if (!doc) {
-    res.status(404).json({ err: 'Transaction not found' });
+    if (!doc) {
+      res.status(404).json({ err: 'Transaction not found' });
+
+      return;
+    }
+
+    res.status(200).json({ doc });
+
+    return;
+  } catch (err) {
+    res.status(500).json({ err: err.message });
 
     return;
   }
-
-  res.status(200).json({ doc });
-
-  return;
 });
 
 export default router;
