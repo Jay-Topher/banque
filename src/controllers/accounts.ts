@@ -1,4 +1,4 @@
-import Accounts from '../models/accounts';
+import Accounts, { iAccountSchema } from '../models/accounts';
 
 // export const transferToAccount = async (
 //   accountNumber: number,
@@ -18,6 +18,11 @@ import Accounts from '../models/accounts';
 //   } catch (err) {}
 // };
 
+/**
+ * Creates a user account
+ * @param {string} userId - The ID of the account owner
+ * @returns {iAccountSchema} - The account created
+ */
 export const createAccount = async (userId: string) => {
   const newAccount = {
     user: userId,
@@ -36,6 +41,11 @@ export const createAccount = async (userId: string) => {
   }
 };
 
+/**
+ * Credit a user's account
+ * @param accountNumber - The account number you intend to credit
+ * @param amount - The amount you wish to credit
+ */
 export const creditAccount = async (accountNumber: string, amount: string) => {
   const newAccountNumber = Number(accountNumber);
   const newAmount = Number(amount);
@@ -54,6 +64,39 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
     { id: account._id },
     {
       accountBalance: account.accountBalance + newAmount,
+    },
+  );
+
+  return updatedAccount;
+};
+
+/**
+ * Debit a user's account
+ * @param accountNumber - The account number you intend to debit
+ * @param amount - The amount you wish to remove
+ */
+export const debitAccount = async (accountNumber: string, amount: string) => {
+  const newAccountNumber = Number(accountNumber);
+  const newAmount = Number(amount);
+
+  if (Number.isNaN(newAccountNumber) || Number.isNaN(newAmount)) {
+    throw Error('Invalid account number or amount');
+  }
+
+  const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+
+  if (!account) {
+    throw Error('Account does not exist');
+  }
+
+  if (account.accountBalance < newAmount) {
+    throw Error('Insufficient Funds');
+  }
+
+  const updatedAccount = await Accounts.findByIdAndUpdate(
+    { id: account._id },
+    {
+      accountBalance: account.accountBalance - newAmount,
     },
   );
 
