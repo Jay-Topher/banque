@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-interface AccountSchema extends mongoose.Document {
-  user: String;
-  accountNumber: Number;
-  accountBalance: Number;
+export interface iAccountSchema extends mongoose.Document {
+  user: string;
+  accountNumber: number;
+  accountBalance: number;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
@@ -32,4 +32,4 @@ const accountSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model<AccountSchema>('accounts', accountSchema);
+export default mongoose.model<iAccountSchema>('accounts', accountSchema);
