@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 
-import sampleController from './controllers/sample';
+// import sampleController from './controllers/sample';
 import SampleType from './types/users';
 
 const query = new GraphQLObjectType({
@@ -10,7 +10,7 @@ const query = new GraphQLObjectType({
     sample: {
       type: SampleType,
       description: 'A sample root schema',
-      resolve: () => sampleController(),
+      // resolve: () => sampleController(),
     },
   }),
 });
