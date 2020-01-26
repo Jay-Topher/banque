@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
-interface TransactionSchema extends mongoose.Document {
+export interface TransactionSchema extends mongoose.Document {
   user: String;
+  benefactor: String;
   transactionType: String;
   transactionAmount: Number;
   description: String;
@@ -12,6 +13,9 @@ const transactionSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users',
+  },
+  benefactor: {
+    type: mongoose.Schema.Types.String,
   },
   transactionType: {
     type: mongoose.Schema.Types.String,
