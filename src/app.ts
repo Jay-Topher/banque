@@ -5,6 +5,7 @@ import logger from 'morgan';
 import graphqlHTTP from 'express-graphql';
 
 import indexRouter from './routes/index';
+import transactionsRouter from './routes/transactions';
 
 import schema from './schema';
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
+app.use('/api/v1/transactions', transactionsRouter);
 
 app.use(
   '/graphql',
