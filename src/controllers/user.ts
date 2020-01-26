@@ -13,8 +13,8 @@ export async function getAllUsers() {
   return Users.find({ deletedAt: null }).sort({ firstName: 'asc' });
 }
 
-export async function getAuser(userID: string) {
-  return Users.findById(userID);
+export async function getAuser(userId: string) {
+  return Users.findById(userId);
 }
 
 export async function createUser(userObj: userDetails) {
@@ -33,12 +33,12 @@ export async function createUser(userObj: userDetails) {
 }
 
 export async function updateUser(
-  userID: string,
+  userId: string,
   userObj: Partial<userDetails>,
 ) {
-  return Users.findOneAndUpdate({ _id: userID }, userObj, { new: true });
+  return Users.findOneAndUpdate({ _id: userId }, userObj, { new: true });
 }
 
-export async function deleteUser(userID: string) {
-  return Users.findOneAndUpdate({ _id: userID }, { deletedAt: new Date() });
+export async function deleteUser(userId: string) {
+  return Users.findOneAndUpdate({ _id: userId }, { deletedAt: new Date() });
 }
