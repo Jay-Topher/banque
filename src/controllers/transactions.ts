@@ -55,3 +55,23 @@ export const viewTransactionsByUser = async (userId: string) => {
   }
 };
 
+// view a transaction
+/**
+ * View a transaction
+ * @param transactionId - The ID of the transaction you intend to view
+ * @returns - The transaction with the queried ID
+ */
+export const viewATransaction = async (transactionId: string) => {
+  try {
+    const transaction = await Transactions.findById({ id: transactionId });
+
+    if (!transaction) {
+      throw Error('Transaction does not exist');
+    }
+
+    return transaction;
+  } catch (err) {
+    console.error('Could not get transaction');
+    throw Error(err.message);
+  }
+};
