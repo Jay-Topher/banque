@@ -21,8 +21,8 @@ const transactionType = new GraphQLObjectType({
     },
     benefactor: {
       type: userType,
-      description: 'The name of the receiver or lender'
-    }
+      description: 'The name of the receiver or lender',
+    },
     transactionType: {
       type: GraphQLString,
       description: 'The type of transaction (DEBIT, CREDIT)',
