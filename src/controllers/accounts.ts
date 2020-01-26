@@ -1,4 +1,4 @@
-import Accounts, { iAccountSchema } from '../models/accounts';
+import Accounts from '../models/accounts';
 
 // export const transferToAccount = async (
 //   accountNumber: number,
