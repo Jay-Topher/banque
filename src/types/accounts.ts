@@ -41,3 +41,5 @@ const accountType = new GraphQLObjectType({
     },
   }),
 });
+
+export default accountType;
