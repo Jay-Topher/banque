@@ -84,7 +84,26 @@ router.get('/:userId', async (req, res) => {
   return;
 });
 
-// // view a transaction
-// router.get('/:transactionId', async (req, res) => {});
+// view a transaction
+router.get('/:transactionId', async (req, res) => {
+  const transactionId = req.params.transactionId;
+  if (!transactionId) {
+    res.status(400).json({ msg: 'Incomplete Url' });
+
+    return;
+  }
+
+  const doc = await viewATransaction(transactionId);
+
+  if (!doc) {
+    res.status(404).json({ err: 'Transaction not found' });
+
+    return;
+  }
+
+  res.status(200).json({ doc });
+
+  return;
+});
 
 export default router;
