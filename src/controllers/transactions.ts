@@ -16,3 +16,22 @@ export const addTransaction = async (body: TransactionSchema) => {
   }
 };
 
+/**
+ * View all transactions
+ * @returns {TransactionSchema[]} All Transactions
+ */
+export const viewTransactions = async () => {
+  try {
+    const transactions = await Transactions.find();
+
+    if (!transactions) {
+      throw Error('No transactions exist');
+    }
+
+    return transactions;
+  } catch (err) {
+    console.error('Could not get transactions');
+    throw Error(err.message);
+  }
+};
+
