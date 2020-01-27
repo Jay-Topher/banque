@@ -5,6 +5,8 @@ import logger from 'morgan';
 import graphqlHTTP from 'express-graphql';
 
 import indexRouter from './routes/index';
+import userRouter from './routes/user';
+import authRouter from './routes/auth';
 
 import schema from './schema';
 
@@ -20,6 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/auth', authRouter);
 
 app.use(
   '/graphql',
