@@ -1,10 +1,11 @@
-import Transactions, { TransactionSchema } from '../models/transactions';
+import Transactions from '../models/transactions';
+import { ITransaction } from '../../types';
 
 /**
  * Create a new transaction
- * @param {TransactionSchema} body - The transaction payload
+ * @param {ITransaction} body - The transaction payload
  */
-export const addTransaction = async (body: TransactionSchema) => {
+export const addTransaction = async (body: ITransaction) => {
   try {
     const transaction = new Transactions(body);
     const saved = await transaction.save();
