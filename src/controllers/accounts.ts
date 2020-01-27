@@ -57,7 +57,11 @@ export const createAccount = async (
  * @param accountNumber - The account number you intend to credit
  * @param amount - The amount you wish to credit
  */
-export const creditAccount = async (accountNumber: string, amount: string) => {
+export const creditAccount = async (
+  accountNumber: string,
+  amount: string,
+  _userId?: string,
+) => {
   const newAccountNumber = Number(accountNumber);
   const newAmount = Number(amount);
 
@@ -66,11 +70,16 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
   }
 
   try {
-    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
-
+    const account = await Accounts.findOne({ accountNumber: newAccountNumber });
+    console.log(account);
     if (!account) {
       throw Error('Account does not exist');
     }
+
+    // if (userId && account.user !== userId) {
+    //   console.log('na this place');
+    //   throw Error('Not authorized');
+    // }
 
     const updatedAccount = await Accounts.findByIdAndUpdate(
       { id: account._id },
@@ -90,7 +99,11 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
  * @param accountNumber - The account number you intend to debit
  * @param amount - The amount you wish to remove
  */
-export const debitAccount = async (accountNumber: string, amount: string) => {
+export const debitAccount = async (
+  accountNumber: string,
+  amount: string,
+  userId?: string,
+) => {
   const newAccountNumber = Number(accountNumber);
   const newAmount = Number(amount);
 
@@ -103,6 +116,10 @@ export const debitAccount = async (accountNumber: string, amount: string) => {
 
     if (!account) {
       throw Error('Account does not exist');
+    }
+
+    if (userId && account._id !== userId) {
+      throw Error('Not authorized');
     }
 
     if (account.accountBalance < newAmount) {
@@ -161,4 +178,9 @@ export const viewAnAccount = async (accountId: string) => {
   } catch (err) {
     throw Error(err.message);
   }
+};
+
+// check if account exists
+export const checkAccount = async (accountNumber: number) => {
+  return await Accounts.exists({ accountNumber });
 };
