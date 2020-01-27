@@ -13,22 +13,18 @@ export async function getAllUsers() {
   return Users.find({ deletedAt: null }).sort({ firstName: 'asc' });
 }
 
-export async function getAuser(userId: string) {
+export async function getAUser(userId: string) {
   return Users.findById(userId);
 }
 
 export async function createUser(userObj: userDetails) {
-  const existingUser = await Users.find({
-    email: userObj.email,
-    phone: userObj.phone,
-  });
+  const existingUser = await Users.findOne({ email: userObj.email });
 
-  if (existingUser.length !== 0) {
+  if (existingUser) {
     throw new Error('User already exists');
   }
 
   const newUser = new Users(userObj);
-
   return newUser.save();
 }
 
