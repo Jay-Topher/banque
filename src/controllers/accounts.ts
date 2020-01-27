@@ -65,20 +65,24 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
     throw Error('Invalid account number or amount');
   }
 
-  const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+  try {
+    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
 
-  if (!account) {
-    throw Error('Account does not exist');
+    if (!account) {
+      throw Error('Account does not exist');
+    }
+
+    const updatedAccount = await Accounts.findByIdAndUpdate(
+      { id: account._id },
+      {
+        accountBalance: account.accountBalance + newAmount,
+      },
+    );
+
+    return updatedAccount;
+  } catch (err) {
+    throw Error(err.message);
   }
-
-  const updatedAccount = await Accounts.findByIdAndUpdate(
-    { id: account._id },
-    {
-      accountBalance: account.accountBalance + newAmount,
-    },
-  );
-
-  return updatedAccount;
 };
 
 /**
@@ -94,22 +98,67 @@ export const debitAccount = async (accountNumber: string, amount: string) => {
     throw Error('Invalid account number or amount');
   }
 
-  const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+  try {
+    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
 
-  if (!account) {
-    throw Error('Account does not exist');
+    if (!account) {
+      throw Error('Account does not exist');
+    }
+
+    if (account.accountBalance < newAmount) {
+      throw Error('Insufficient Funds');
+    }
+
+    const updatedAccount = await Accounts.findByIdAndUpdate(
+      { id: account._id },
+      {
+        accountBalance: account.accountBalance - newAmount,
+      },
+    );
+
+    return updatedAccount;
+  } catch (err) {
+    throw Error(err.message);
   }
+};
 
-  if (account.accountBalance < newAmount) {
-    throw Error('Insufficient Funds');
+// view all accounts
+export const viewAllAccounts = async () => {
+  try {
+    const accounts = await Accounts.find();
+
+    return accounts;
+  } catch (err) {
+    throw Error(err.message);
   }
+};
 
-  const updatedAccount = await Accounts.findByIdAndUpdate(
-    { id: account._id },
-    {
-      accountBalance: account.accountBalance - newAmount,
-    },
-  );
+// view all account by a user
+export const viewAllAccountsByUser = async (userId: string) => {
+  try {
+    const accounts = await Accounts.find({ user: userId });
 
-  return updatedAccount;
+    if (!accounts) {
+      throw Error('No accounts found');
+    }
+
+    return accounts;
+  } catch (err) {
+    throw Error(err.message);
+  }
+};
+
+// view a user's account
+export const viewAnAccount = async (accountId: string) => {
+  try {
+    const account = await Accounts.findById({ id: accountId });
+
+    if (!account) {
+      throw Error('Account not found');
+    }
+
+    return account;
+  } catch (err) {
+    throw Error(err.message);
+  }
 };
