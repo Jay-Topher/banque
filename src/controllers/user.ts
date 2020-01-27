@@ -13,32 +13,28 @@ export async function getAllUsers() {
   return Users.find({ deletedAt: null }).sort({ firstName: 'asc' });
 }
 
-export async function getAuser(userID: string) {
-  return Users.findById(userID);
+export async function getAUser(userId: string) {
+  return Users.findById(userId);
 }
 
 export async function createUser(userObj: userDetails) {
-  const existingUser = await Users.find({
-    email: userObj.email,
-    phone: userObj.phone,
-  });
+  const existingUser = await Users.findOne({ email: userObj.email });
 
-  if (existingUser.length !== 0) {
+  if (existingUser) {
     throw new Error('User already exists');
   }
 
   const newUser = new Users(userObj);
-
   return newUser.save();
 }
 
 export async function updateUser(
-  userID: string,
+  userId: string,
   userObj: Partial<userDetails>,
 ) {
-  return Users.findOneAndUpdate({ _id: userID }, userObj, { new: true });
+  return Users.findOneAndUpdate({ _id: userId }, userObj, { new: true });
 }
 
-export async function deleteUser(userID: string) {
-  return Users.findOneAndUpdate({ _id: userID }, { deletedAt: new Date() });
+export async function deleteUser(userId: string) {
+  return Users.findOneAndUpdate({ _id: userId }, { deletedAt: new Date() });
 }
