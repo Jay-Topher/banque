@@ -1,32 +1,43 @@
 import Accounts from '../models/accounts';
+import { iAccountSchema } from '../models/accounts';
 
-// export const transferToAccount = async (
-//   accountNumber: number,
-//   amount: number,
-//   description: string,
-// ) => {
-//   if (!accountNumber || !amount || !description) {
-//     throw Error('Incomplete Parameters');
-//   }
+// get account number given userId
+/**
+ * Get a user's account number
+ * @param {string} userId - The ID of the account owner
+ * @returns {iAccountSchema} - The owner's account number.
+ */
+export const getAccountNumber = async (
+  userId: string,
+): Promise<iAccountSchema> => {
+  try {
+    const accountNumber = await Accounts.findOne(
+      { user: userId },
+      'accountNumber',
+    );
 
-//   try {
-//     const account = await AccountSchema.find({ accountNumber: accountNumber });
-//     if (!account) {
-//       throw Error('Account does not exist');
-//     }
+    if (!accountNumber) {
+      throw Error('No such account');
+    }
 
-//   } catch (err) {}
-// };
+    return accountNumber;
+  } catch (err) {
+    console.error('no account', err.message);
+    throw Error(err.message);
+  }
+};
 
 /**
  * Creates a user account
  * @param {string} userId - The ID of the account owner
  * @returns {iAccountSchema} - The account created
  */
-export const createAccount = async (userId: string) => {
+export const createAccount = async (
+  userId: string,
+): Promise<iAccountSchema> => {
   const newAccount = {
     user: userId,
-    accountNumber: Number(`2${Math.random() * 1000000000}`),
+    accountNumber: Number(`2${Math.trunc(Math.random() * 1000000000)}`),
     accountBalance: 0,
   };
 
@@ -54,20 +65,24 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
     throw Error('Invalid account number or amount');
   }
 
-  const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+  try {
+    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
 
-  if (!account) {
-    throw Error('Account does not exist');
+    if (!account) {
+      throw Error('Account does not exist');
+    }
+
+    const updatedAccount = await Accounts.findByIdAndUpdate(
+      { id: account._id },
+      {
+        accountBalance: account.accountBalance + newAmount,
+      },
+    );
+
+    return updatedAccount;
+  } catch (err) {
+    throw Error(err.message);
   }
-
-  const updatedAccount = await Accounts.findByIdAndUpdate(
-    { id: account._id },
-    {
-      accountBalance: account.accountBalance + newAmount,
-    },
-  );
-
-  return updatedAccount;
 };
 
 /**
@@ -83,22 +98,67 @@ export const debitAccount = async (accountNumber: string, amount: string) => {
     throw Error('Invalid account number or amount');
   }
 
-  const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+  try {
+    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
 
-  if (!account) {
-    throw Error('Account does not exist');
+    if (!account) {
+      throw Error('Account does not exist');
+    }
+
+    if (account.accountBalance < newAmount) {
+      throw Error('Insufficient Funds');
+    }
+
+    const updatedAccount = await Accounts.findByIdAndUpdate(
+      { id: account._id },
+      {
+        accountBalance: account.accountBalance - newAmount,
+      },
+    );
+
+    return updatedAccount;
+  } catch (err) {
+    throw Error(err.message);
   }
+};
 
-  if (account.accountBalance < newAmount) {
-    throw Error('Insufficient Funds');
+// view all accounts
+export const viewAllAccounts = async () => {
+  try {
+    const accounts = await Accounts.find();
+
+    return accounts;
+  } catch (err) {
+    throw Error(err.message);
   }
+};
 
-  const updatedAccount = await Accounts.findByIdAndUpdate(
-    { id: account._id },
-    {
-      accountBalance: account.accountBalance - newAmount,
-    },
-  );
+// view all account by a user
+export const viewAllAccountsByUser = async (userId: string) => {
+  try {
+    const accounts = await Accounts.find({ user: userId });
 
-  return updatedAccount;
+    if (!accounts) {
+      throw Error('No accounts found');
+    }
+
+    return accounts;
+  } catch (err) {
+    throw Error(err.message);
+  }
+};
+
+// view a user's account
+export const viewAnAccount = async (accountId: string) => {
+  try {
+    const account = await Accounts.findById({ id: accountId });
+
+    if (!account) {
+      throw Error('Account not found');
+    }
+
+    return account;
+  } catch (err) {
+    throw Error(err.message);
+  }
 };
