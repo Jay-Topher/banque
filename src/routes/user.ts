@@ -2,11 +2,7 @@ import {
   createAccount,
   viewAnAccount,
   viewAllAccountsByUser,
-  creditAccount,
-  debitAccount,
-  checkAccount,
 } from './../controllers/accounts';
-import { addTransaction } from '../controllers/transactions';
 import { Router } from 'express';
 import joi from '@hapi/joi';
 import bcrypt from 'bcryptjs';
@@ -19,7 +15,6 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/user';
-import { ITransaction } from '../../types';
 
 const router = Router();
 
@@ -123,8 +118,9 @@ router.post('/', async (req, res) => {
     value.password = await bcrypt.hash(value.password, salt);
 
     const doc = await createUser(value);
-    const userId = doc._id;
+    const userId = doc.id;
     const userAccount = await createAccount(userId);
+    console.log(userAccount);
 
     const payload = {
       user: {
@@ -142,7 +138,7 @@ router.post('/', async (req, res) => {
       payload,
       secret,
       {
-        expiresIn: '36000',
+        expiresIn: '1h',
       },
       (err, token) => {
         if (err) {
@@ -282,97 +278,97 @@ router.get('/:userId/accounts', async (req, res) => {
   }
 });
 
-// credit your account
-router.patch('/:userId/accounts/:accountNumber', async (req, res) => {
-  const userId = req.params.userId;
-  const accountNumber = req.params.accountNumber;
-  const amount = req.body.amount;
-  const description = req.body.description;
+// // credit your account
+// router.patch('/:userId/accounts/:accountNumber', async (req, res) => {
+//   const userId = req.params.userId;
+//   const accountNumber = req.params.accountNumber;
+//   const amount = req.body.amount;
+//   const description = req.body.description;
 
-  // TODO Card verification
+//   // TODO Card verification
 
-  try {
-    const doc = await creditAccount(accountNumber, amount, userId);
+//   try {
+//     const doc = await creditAccount(accountNumber, amount);
 
-    if (!doc) {
-      res.status(404).json({ msg: 'Account not found' });
+//     if (!doc) {
+//       res.status(404).json({ msg: 'Account not found' });
 
-      return;
-    }
-    const body: ITransaction = {
-      user: userId,
-      benefactor: userId,
-      transactionType: 'CREDIT',
-      description,
-      transactionAmount: Number(amount),
-    };
-    const transaction = await addTransaction(body);
+//       return;
+//     }
+//     const body: ITransaction = {
+//       user: userId,
+//       benefactor: userId,
+//       transactionType: 'CREDIT',
+//       description,
+//       transactionAmount: Number(amount),
+//     };
+//     const transaction = await addTransaction(body);
 
-    res.status(201).json({ doc, transaction });
+//     res.status(201).json({ doc, transaction });
 
-    return;
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
+//     return;
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
 
-    return;
-  }
-});
+//     return;
+//   }
+// });
 
-// transfer funds
-router.patch(
-  '/:userId/accounts/:accountNumber/transfer/:receiver',
-  async (req, res) => {
-    const { userId, accountNumber, receiver } = req.params;
-    const { amount, description } = req.body;
-    // verify accounts
-    const [account1, account2] = await Promise.all([
-      checkAccount(accountNumber),
-      checkAccount(receiver),
-    ]);
+// // transfer funds
+// router.patch(
+//   '/:userId/accounts/:accountNumber/transfer/:receiver',
+//   async (req, res) => {
+//     const { userId, accountNumber, receiver } = req.params;
+//     const { amount, description } = req.body;
+//     // verify accounts
+//     const [account1, account2] = await Promise.all([
+//       checkAccount(accountNumber),
+//       checkAccount(receiver),
+//     ]);
 
-    if (!account1 || !account2) {
-      res.status(401).json({ err: 'Invalid accounts' });
+//     if (!account1 || !account2) {
+//       res.status(401).json({ err: 'Invalid accounts' });
 
-      return;
-    }
-    // debit user
-    try {
-      const debitted = await debitAccount(accountNumber, amount, userId);
-      if (!debitted) {
-        res.status(400).json({ msg: 'Something went wrong' });
+//       return;
+//     }
+//     // debit user
+//     try {
+//       const debitted = await debitAccount(accountNumber, amount);
+//       if (!debitted) {
+//         res.status(400).json({ msg: 'Something went wrong' });
 
-        return;
-      }
+//         return;
+//       }
 
-      const creditted = await creditAccount(receiver, amount);
-      if (!creditted) {
-        res.status(400).json({ msg: 'Something went wrong' });
+//       const creditted = await creditAccount(receiver, amount);
+//       if (!creditted) {
+//         res.status(400).json({ msg: 'Something went wrong' });
 
-        return;
-      }
+//         return;
+//       }
 
-      const debitBody: ITransaction = {
-        user: userId,
-        benefactor: receiver,
-        transactionType: 'DEBIT',
-        transactionAmount: Number(amount),
-        description,
-      };
-      const creditBody: ITransaction = {
-        user: receiver,
-        benefactor: userId,
-        transactionType: 'CREDIT',
-        transactionAmount: Number(amount),
-        description,
-      };
-      const [transaction1, transaction2] = await Promise.all([
-        addTransaction(creditBody),
-        addTransaction(debitBody),
-      ]);
+//       const debitBody: ITransaction = {
+//         user: userId,
+//         benefactor: receiver,
+//         transactionType: 'DEBIT',
+//         transactionAmount: Number(amount),
+//         description,
+//       };
+//       const creditBody: ITransaction = {
+//         user: receiver,
+//         benefactor: userId,
+//         transactionType: 'CREDIT',
+//         transactionAmount: Number(amount),
+//         description,
+//       };
+//       const [transaction1, transaction2] = await Promise.all([
+//         addTransaction(creditBody),
+//         addTransaction(debitBody),
+//       ]);
 
-      res.status(201).json({ creditted, debitted, transaction1, transaction2 });
-    } catch (err) {}
-  },
-);
+//       res.status(201).json({ creditted, debitted, transaction1, transaction2 });
+//     } catch (err) {}
+//   },
+// );
 
 export default router;
