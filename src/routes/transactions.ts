@@ -156,7 +156,7 @@ router.patch('/:userId/credit', async (req, res) => {
       return;
     }
 
-    const newTransaction = addTransaction({
+    const newTransaction = await addTransaction({
       user: userId,
       benefactor: userId,
       transactionType: 'CREDIT',
