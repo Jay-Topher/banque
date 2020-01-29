@@ -12,6 +12,8 @@ import {
   creditAccount,
   checkAccount,
 } from '../controllers/accounts';
+import { getAUser } from '../controllers/user';
+import bcrypt from 'bcryptjs';
 
 const router = Router();
 
@@ -176,14 +178,21 @@ router.patch('/:userId/credit', async (req, res) => {
 
 // transfer funds from one account to another
 router.patch('/:userId/transfer', async (req, res) => {
-  const { amount, description, accountNumber } = req.body;
+  const { amount, description, accountNumber, pin } = req.body;
   const userId = req.params.userId;
 
   try {
-    const [accountToDebit, accountExists] = await Promise.all([
+    const [accountToDebit, accountExists, userInfo] = await Promise.all([
       getAccount(userId),
       checkAccount(accountNumber),
+      getAUser(userId),
     ]);
+
+    const authorized = await bcrypt.compare(pin, userInfo!.pin);
+
+    if (!authorized) {
+      res.status(400).json({ msg: 'Incorrect Pin' });
+    }
 
     if (!accountToDebit) {
       res.status(400).json({ msg: 'Invalid Account' });
