@@ -106,8 +106,9 @@ export const debitAccount = async (accountNumber: string, amount: string) => {
       throw Error('Insufficient Funds');
     }
 
-    const updatedAccount = await Accounts.findByIdAndUpdate(
-      { id: account._id },
+    const id = account.id;
+    const updatedAccount = await Accounts.findOneAndUpdate(
+      { _id: id },
       {
         accountBalance: account.accountBalance - newAmount,
       },
