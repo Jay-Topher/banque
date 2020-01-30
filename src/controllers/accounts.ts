@@ -76,7 +76,7 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
       },
       { new: true },
     );
-    console.log('upd=', updatedAccount);
+
     return updatedAccount;
   } catch (err) {
     throw Error(err.message);
