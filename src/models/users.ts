@@ -57,8 +57,6 @@ const userSchema = new mongoose.Schema(
     },
     pin: {
       type: String,
-      maxlength: 4,
-      minlength: 4,
     },
     deletedAt: {
       type: Date,
