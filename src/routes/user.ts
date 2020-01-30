@@ -128,7 +128,6 @@ router.post('/', async (req, res) => {
     const doc = await createUser(value);
     const userId = doc.id;
     const userAccount = await createAccount(userId);
-    console.log(userAccount);
 
     const payload = {
       user: {
@@ -138,7 +137,7 @@ router.post('/', async (req, res) => {
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
-      console.log('no secret');
+      res.status(500).json({ err: 'Secret not available' });
       return;
     }
 
