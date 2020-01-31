@@ -89,7 +89,7 @@ router.post('/', async (req, res) => {
       payload,
       secret,
       {
-        expiresIn: '36000',
+        expiresIn: '1h',
       },
       (err, token) => {
         if (err) {

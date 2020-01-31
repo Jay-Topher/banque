@@ -2,11 +2,7 @@ import {
   createAccount,
   viewAnAccount,
   viewAllAccountsByUser,
-  creditAccount,
-  debitAccount,
-  checkAccount,
 } from './../controllers/accounts';
-import { addTransaction } from '../controllers/transactions';
 import { Router } from 'express';
 import joi from '@hapi/joi';
 import bcrypt from 'bcryptjs';
@@ -19,7 +15,6 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/user';
-import { ITransaction } from '../../types';
 
 const router = Router();
 
@@ -107,6 +102,11 @@ router.post('/', async (req, res) => {
       .max(50)
       .lowercase()
       .required(),
+    pin: joi
+      .string()
+      .min(4)
+      .max(4)
+      .pattern(/^\d{4}$/),
   });
   const { error, value } = schema.validate(req.body, {
     abortEarly: false,
@@ -120,10 +120,13 @@ router.post('/', async (req, res) => {
 
   try {
     const salt = await bcrypt.genSalt(10);
-    value.password = await bcrypt.hash(value.password, salt);
+    [value.password, value.pin] = await Promise.all([
+      bcrypt.hash(value.password, salt),
+      bcrypt.hash(value.pin, salt),
+    ]);
 
     const doc = await createUser(value);
-    const userId = doc._id;
+    const userId = doc.id;
     const userAccount = await createAccount(userId);
 
     const payload = {
@@ -134,7 +137,7 @@ router.post('/', async (req, res) => {
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
-      console.log('no secret');
+      res.status(500).json({ err: 'Secret not available' });
       return;
     }
 
@@ -142,7 +145,7 @@ router.post('/', async (req, res) => {
       payload,
       secret,
       {
-        expiresIn: '36000',
+        expiresIn: '1h',
       },
       (err, token) => {
         if (err) {
@@ -281,98 +284,5 @@ router.get('/:userId/accounts', async (req, res) => {
     return;
   }
 });
-
-// credit your account
-router.patch('/:userId/accounts/:accountNumber', async (req, res) => {
-  const userId = req.params.userId;
-  const accountNumber = req.params.accountNumber;
-  const amount = req.body.amount;
-  const description = req.body.description;
-
-  // TODO Card verification
-
-  try {
-    const doc = await creditAccount(accountNumber, amount, userId);
-
-    if (!doc) {
-      res.status(404).json({ msg: 'Account not found' });
-
-      return;
-    }
-    const body: ITransaction = {
-      user: userId,
-      benefactor: userId,
-      transactionType: 'CREDIT',
-      description,
-      transactionAmount: Number(amount),
-    };
-    const transaction = await addTransaction(body);
-
-    res.status(201).json({ doc, transaction });
-
-    return;
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
-
-    return;
-  }
-});
-
-// transfer funds
-router.patch(
-  '/:userId/accounts/:accountNumber/transfer/:receiver',
-  async (req, res) => {
-    const { userId, accountNumber, receiver } = req.params;
-    const { amount, description } = req.body;
-    // verify accounts
-    const [account1, account2] = await Promise.all([
-      checkAccount(accountNumber),
-      checkAccount(receiver),
-    ]);
-
-    if (!account1 || !account2) {
-      res.status(401).json({ err: 'Invalid accounts' });
-
-      return;
-    }
-    // debit user
-    try {
-      const debitted = await debitAccount(accountNumber, amount, userId);
-      if (!debitted) {
-        res.status(400).json({ msg: 'Something went wrong' });
-
-        return;
-      }
-
-      const creditted = await creditAccount(receiver, amount);
-      if (!creditted) {
-        res.status(400).json({ msg: 'Something went wrong' });
-
-        return;
-      }
-
-      const debitBody: ITransaction = {
-        user: userId,
-        benefactor: receiver,
-        transactionType: 'DEBIT',
-        transactionAmount: Number(amount),
-        description,
-      };
-      const creditBody: ITransaction = {
-        user: receiver,
-        benefactor: userId,
-        transactionType: 'CREDIT',
-        transactionAmount: Number(amount),
-        description,
-      };
-      const [transaction1, transaction2] = await Promise.all([
-        addTransaction(creditBody),
-        addTransaction(debitBody),
-      ]);
-
-      res.status(201).json({ creditted, debitted, transaction1, transaction2 });
-    } catch (err) {}
-  },
-);
 
 export default router;

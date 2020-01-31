@@ -26,7 +26,6 @@ export default function(req: IReq, res: Response, next: NextFunction) {
       return;
     }
     const decoded: any = jwt.verify(token, secret);
-    console.log(decoded);
     req.user = decoded.user;
     next();
   } catch (error) {

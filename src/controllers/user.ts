@@ -7,6 +7,7 @@ interface userDetails {
   bvn: string;
   email: string;
   password: string;
+  pin: string;
 }
 
 export async function getAllUsers() {

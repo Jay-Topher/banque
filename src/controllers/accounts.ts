@@ -7,9 +7,7 @@ import { iAccountSchema } from '../models/accounts';
  * @param {string} userId - The ID of the account owner
  * @returns {iAccountSchema} - The owner's account number.
  */
-export const getAccountNumber = async (
-  userId: string,
-): Promise<iAccountSchema> => {
+export const getAccount = async (userId: string): Promise<iAccountSchema> => {
   try {
     const accountNumber = await Accounts.findOne(
       { user: userId },
@@ -37,7 +35,7 @@ export const createAccount = async (
 ): Promise<iAccountSchema> => {
   const newAccount = {
     user: userId,
-    accountNumber: Number(`2${Math.trunc(Math.random() * 1000000000)}`),
+    accountNumber: `2${Math.trunc(Math.random() * 1000000000)}`,
     accountBalance: 0,
   };
 
@@ -57,35 +55,26 @@ export const createAccount = async (
  * @param accountNumber - The account number you intend to credit
  * @param amount - The amount you wish to credit
  */
-export const creditAccount = async (
-  accountNumber: string,
-  amount: string,
-  _userId?: string,
-) => {
-  const newAccountNumber = Number(accountNumber);
+export const creditAccount = async (accountNumber: string, amount: string) => {
   const newAmount = Number(amount);
 
-  if (Number.isNaN(newAccountNumber) || Number.isNaN(newAmount)) {
+  if (Number.isNaN(newAmount)) {
     throw Error('Invalid account number or amount');
   }
 
   try {
-    const account = await Accounts.findOne({ accountNumber: newAccountNumber });
-    console.log(account);
+    const account = await Accounts.findOne({ accountNumber });
+
     if (!account) {
       throw Error('Account does not exist');
     }
-
-    // if (userId && account.user !== userId) {
-    //   console.log('na this place');
-    //   throw Error('Not authorized');
-    // }
-
-    const updatedAccount = await Accounts.findByIdAndUpdate(
-      { id: account._id },
+    const id = account.id;
+    const updatedAccount = await Accounts.findOneAndUpdate(
+      { _id: id },
       {
         accountBalance: account.accountBalance + newAmount,
       },
+      { new: true },
     );
 
     return updatedAccount;
@@ -99,38 +88,31 @@ export const creditAccount = async (
  * @param accountNumber - The account number you intend to debit
  * @param amount - The amount you wish to remove
  */
-export const debitAccount = async (
-  accountNumber: string,
-  amount: string,
-  userId?: string,
-) => {
-  const newAccountNumber = Number(accountNumber);
+export const debitAccount = async (accountNumber: string, amount: string) => {
   const newAmount = Number(amount);
 
-  if (Number.isNaN(newAccountNumber) || Number.isNaN(newAmount)) {
+  if (Number.isNaN(newAmount)) {
     throw Error('Invalid account number or amount');
   }
 
   try {
-    const [account] = await Accounts.find({ accountNumber: newAccountNumber });
+    const account = await Accounts.findOne({ accountNumber: accountNumber });
 
     if (!account) {
       throw Error('Account does not exist');
-    }
-
-    if (userId && account._id !== userId) {
-      throw Error('Not authorized');
     }
 
     if (account.accountBalance < newAmount) {
       throw Error('Insufficient Funds');
     }
 
-    const updatedAccount = await Accounts.findByIdAndUpdate(
-      { id: account._id },
+    const id = account.id;
+    const updatedAccount = await Accounts.findOneAndUpdate(
+      { _id: id },
       {
         accountBalance: account.accountBalance - newAmount,
       },
+      { new: true },
     );
 
     return updatedAccount;
@@ -181,6 +163,6 @@ export const viewAnAccount = async (accountId: string) => {
 };
 
 // check if account exists
-export const checkAccount = async (accountNumber: number) => {
+export const checkAccount = async (accountNumber: string) => {
   return await Accounts.exists({ accountNumber });
 };
