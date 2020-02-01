@@ -127,11 +127,13 @@ router.post('/', async (req, res) => {
 
     const doc = await createUser(value);
     const userId = doc.id;
+    const isAdmin = doc.isAdmin;
     const userAccount = await createAccount(userId);
 
     const payload = {
       user: {
         id: userId,
+        isAdmin,
       },
     };
     const secret = process.env.JWT_SECRET;
