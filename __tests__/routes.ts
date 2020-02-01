@@ -53,3 +53,17 @@ it('Results in an error when querying a non-existent user', async () => {
   expect(response.status).toBe(404);
   expect(response.body).toEqual({ message: 'User not found' });
 });
+
+it('returns an array when qweryng for transactions', async () => {
+  const response = await request(app).get('/api/v1/transactions');
+
+  expect(response.status).toBe(200);
+  expect(response.body).toBeInstanceOf(Object);
+});
+
+it('returns an array when qweryng for users', async () => {
+  const response = await request(app).get('/api/v1/users');
+
+  expect(response.status).toBe(200);
+  expect(response.body).toBeInstanceOf(Object);
+});
