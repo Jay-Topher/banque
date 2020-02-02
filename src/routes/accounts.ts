@@ -5,12 +5,12 @@ const router = Router();
 
 // view all accounts
 // for admin alone
-router.get('/api/v1/users/accounts', async (_req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const doc = await viewAllAccounts();
 
     if (!doc) {
-      res.status(404).json({ msg: 'No transactions yet' });
+      res.status(404).json({ msg: 'No Accounts yet' });
 
       return;
     }
