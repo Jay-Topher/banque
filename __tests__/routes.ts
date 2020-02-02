@@ -65,5 +65,12 @@ it('returns an array when qweryng for users', async () => {
   const response = await request(app).get('/api/v1/users');
 
   expect(response.status).toBe(200);
-  expect(response.body).toBeInstanceOf(Object);
+  expect(Array.isArray(response.body.data)).toBe(true);
+});
+
+it('returns an array when qweryng for transactions', async () => {
+  const response = await request(app).get('/api/v1/transactions');
+
+  expect(response.status).toBe(200);
+  expect(Array.isArray(response.body.doc)).toBe(true);
 });
