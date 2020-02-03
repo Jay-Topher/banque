@@ -48,6 +48,7 @@
     "cypress": "3.4.1",
     "husky": "3.0.3",
     "jest": "24.9.0",
+    "mongodb-memory-server": "6.2.4",
     "prettier": "1.18.2",
     "pretty-quick": "1.11.1",
     "supertest": "4.0.2",

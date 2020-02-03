@@ -23,7 +23,9 @@ const router = Router();
 
 router.get('/', auth, async (req: any, res: Response) => {
   try {
-    const user = await Users.findById({ _id: req.user.id }).select('-password'); // Dont return the password
+    const user = await Users.findById({ _id: req.user.id }).select(
+      '-password, -pin',
+    ); // Dont return the password
     res.json({ user });
   } catch (error) {
     console.log(error.message);

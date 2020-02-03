@@ -8,6 +8,7 @@ interface UserSchema extends mongoose.Document {
   email: string;
   password: string;
   pin: string;
+  isAdmin: boolean;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
@@ -57,6 +58,10 @@ const userSchema = new mongoose.Schema(
     },
     pin: {
       type: String,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
     deletedAt: {
       type: Date,

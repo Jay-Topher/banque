@@ -8,6 +8,7 @@ import indexRouter from './routes/index';
 import userRouter from './routes/user';
 import authRouter from './routes/auth';
 import transactionsRouter from './routes/transactions';
+import accountsRouter from './routes/accounts';
 
 import schema from './schema';
 
@@ -26,6 +27,7 @@ app.use('/', indexRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/transactions', transactionsRouter);
+app.use('/api/v1/accounts', accountsRouter);
 
 app.use(
   '/graphql',
