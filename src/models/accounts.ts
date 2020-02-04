@@ -8,6 +8,7 @@ export interface iAccountSchema extends mongoose.Document {
   updatedAt: Date;
   deletedAt: Date;
 }
+// todo account balance should be in kobo
 
 const accountSchema = new mongoose.Schema(
   {
