@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { viewAllAccounts, viewAnAccount } from '../controllers/accounts';
+import { viewAllAccounts } from '../controllers/accounts';
 
 const router = Router();
 
@@ -20,30 +20,6 @@ router.get('/', async (_req, res) => {
     return;
   } catch (err) {
     res.status(500).json({ err: err.message });
-    return;
-  }
-});
-
-router.get('/:accountId', async (req, res) => {
-  const userAccountId = req.params.accountId;
-
-  if (!userAccountId) {
-    res.status(400).json({ msg: 'Invalid url/Account does not exist' });
-
-    return;
-  }
-  try {
-    const doc = await viewAnAccount(userAccountId);
-
-    if (!doc) {
-      res.status(400).json({ msg: 'Account not found' });
-
-      return;
-    }
-    res.status(200).json({ doc });
-  } catch (err) {
-    res.status(500).json({ err: err.message });
-
     return;
   }
 });
