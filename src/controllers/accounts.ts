@@ -121,7 +121,7 @@ export const debitAccount = async (accountNumber: string, amount: string) => {
   }
 };
 
-// view all accounts
+// view all accounts (Admin view only)
 export const viewAllAccounts = async () => {
   try {
     const accounts = await Accounts.find();
@@ -132,7 +132,7 @@ export const viewAllAccounts = async () => {
   }
 };
 
-// view all account by a user
+// view all account by a user (User)
 export const viewAllAccountsByUser = async (userId: string) => {
   try {
     const accounts = await Accounts.find({ user: userId });
@@ -147,10 +147,10 @@ export const viewAllAccountsByUser = async (userId: string) => {
   }
 };
 
-// view a user's account
+// view a user's account(Admin view only)
 export const viewAnAccount = async (accountId: string) => {
   try {
-    const account = await Accounts.findById({ id: accountId });
+    const account = await Accounts.findById({ _id: accountId });
 
     if (!account) {
       throw Error('Account not found');
@@ -161,6 +161,10 @@ export const viewAnAccount = async (accountId: string) => {
     throw Error(err.message);
   }
 };
+
+export async function deleteAccount(userId: string) {
+  return Accounts.findOneAndUpdate({ _id: userId }, { deletedAt: new Date() });
+}
 
 // check if account exists
 export const checkAccount = async (accountNumber: string) => {
