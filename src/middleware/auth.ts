@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 
-interface IReq extends Request {
+export interface IReq extends Request {
   user?: string;
 }
 // interface IDecode {
@@ -16,7 +16,9 @@ export default function(req: IReq, res: Response, next: NextFunction) {
 
   // Check if not token
   if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
+    res.status(401).json({ message: 'No token, authorization denied' });
+
+    return;
   }
 
   try {
