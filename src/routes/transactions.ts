@@ -5,7 +5,6 @@ import {
   viewTransactions,
   viewTransactionsByUser,
 } from '../controllers/transactions';
-import { ITransaction } from '../../types';
 import {
   getAccount,
   debitAccount,
@@ -14,11 +13,13 @@ import {
 } from '../controllers/accounts';
 import { getAUser } from '../controllers/user';
 import bcrypt from 'bcryptjs';
+import adminAuth from '../middleware/adminAuth';
+import auth from '../middleware/auth';
 
 const router = Router();
 
 // view all transactions
-router.get('/', async (_req, res) => {
+router.get('/', adminAuth, async (_req, res) => {
   try {
     const doc = await viewTransactions();
 
@@ -39,47 +40,47 @@ router.get('/', async (_req, res) => {
 });
 
 // add transaction
-router.post('/:userId', async (req, res) => {
-  const user = req.params.userId;
-  if (!user) {
-    res.status(400).json({ msg: 'Unable to add' });
+// router.post('/:userId', async (req, res) => {
+//   const user = req.params.userId;
+//   if (!user) {
+//     res.status(400).json({ msg: 'Unable to add' });
 
-    return;
-  }
-  try {
-    const {
-      benefactor,
-      transactionType,
-      transactionAmount,
-      description,
-    } = req.body;
-    const body: ITransaction = {
-      user,
-      benefactor,
-      transactionType,
-      transactionAmount,
-      description,
-    };
-    const doc = await addTransaction(body);
+//     return;
+//   }
+//   try {
+//     const {
+//       benefactor,
+//       transactionType,
+//       transactionAmount,
+//       description,
+//     } = req.body;
+//     const body: ITransaction = {
+//       user,
+//       benefactor,
+//       transactionType,
+//       transactionAmount,
+//       description,
+//     };
+//     const doc = await addTransaction(body);
 
-    if (!doc) {
-      res.status(400).json({ msg: 'Could not add transaction' });
+//     if (!doc) {
+//       res.status(400).json({ msg: 'Could not add transaction' });
 
-      return;
-    }
+//       return;
+//     }
 
-    res.status(201).json({ doc });
+//     res.status(201).json({ doc });
 
-    return;
-  } catch (err) {
-    res.status(500).json({ err: err.message });
+//     return;
+//   } catch (err) {
+//     res.status(500).json({ err: err.message });
 
-    return;
-  }
-});
+//     return;
+//   }
+// });
 
 // view transactions by a user
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', auth, async (req, res) => {
   const userId = req.params.userId;
   if (!userId) {
     res.status(400).json({ msg: 'Invalid url' });
@@ -107,7 +108,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 // view a transaction
-router.get('/:transactionId', async (req, res) => {
+router.get('/:transactionId', auth, async (req, res) => {
   const transactionId = req.params.transactionId;
   if (!transactionId) {
     res.status(400).json({ msg: 'Incomplete Url' });
@@ -135,7 +136,7 @@ router.get('/:transactionId', async (req, res) => {
 });
 
 // credit your account
-router.patch('/:userId/credit', async (req, res) => {
+router.patch('/:userId/credit', auth, async (req, res) => {
   const amount = req.body.amount;
   const userId = req.params.userId;
 
@@ -177,7 +178,7 @@ router.patch('/:userId/credit', async (req, res) => {
 });
 
 // transfer funds from one account to another
-router.patch('/:userId/transfer', async (req, res) => {
+router.patch('/:userId/transfer', auth, async (req, res) => {
   const { amount, description, accountNumber, pin } = req.body;
   const userId = req.params.userId;
 

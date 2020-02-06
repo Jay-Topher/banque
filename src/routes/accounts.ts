@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { viewAllAccounts } from '../controllers/accounts';
+import adminAuth from '../middleware/adminAuth';
 
 const router = Router();
 
 // view all accounts
 // for admin alone
-router.get('/', async (_req, res) => {
+router.get('/', adminAuth, async (_req, res) => {
   try {
     const doc = await viewAllAccounts();
 
