@@ -33,6 +33,7 @@ export default function(req: IReq, res: Response, next: NextFunction) {
   } catch (error) {
     console.error(error.message);
     res.status(401).json({ message: 'Token is not valid' });
+
+    return;
   }
-  return;
 }
