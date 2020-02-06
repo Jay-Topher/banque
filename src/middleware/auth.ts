@@ -2,7 +2,10 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 
 export interface IReq extends Request {
-  user?: string;
+  user?: {
+    id: string;
+    isAdmin: boolean;
+  };
 }
 // interface IDecode {
 //   user: {
