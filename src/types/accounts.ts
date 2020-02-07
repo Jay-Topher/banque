@@ -20,7 +20,7 @@ const accountType = new GraphQLObjectType({
       description: 'The account owner',
     },
     accountNumber: {
-      type: GraphQLInt,
+      type: GraphQLString,
       description: "The holder's account number",
     },
     accountBalance: {

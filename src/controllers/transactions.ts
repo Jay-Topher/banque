@@ -43,7 +43,7 @@ export const viewTransactions = async () => {
  */
 export const viewTransactionsByUser = async (userId: string) => {
   try {
-    const transactions = await Transactions.find({ id: userId });
+    const transactions = await Transactions.find({ user: userId });
 
     if (!transactions) {
       throw Error('Transaction does not exist');

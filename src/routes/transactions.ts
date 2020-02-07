@@ -39,44 +39,44 @@ router.get('/', async (_req, res) => {
 });
 
 // add transaction
-router.post('/:userId', async (req, res) => {
-  const user = req.params.userId;
-  if (!user) {
-    res.status(400).json({ msg: 'Unable to add' });
+// router.post('/:userId', async (req, res) => {
+//   const user = req.params.userId;
+//   if (!user) {
+//     res.status(400).json({ msg: 'Unable to add' });
 
-    return;
-  }
-  try {
-    const {
-      benefactor,
-      transactionType,
-      transactionAmount,
-      description,
-    } = req.body;
-    const body: ITransaction = {
-      user,
-      benefactor,
-      transactionType,
-      transactionAmount,
-      description,
-    };
-    const doc = await addTransaction(body);
+//     return;
+//   }
+//   try {
+//     const {
+//       benefactor,
+//       transactionType,
+//       transactionAmount,
+//       description,
+//     } = req.body;
+//     const body: ITransaction = {
+//       user,
+//       benefactor,
+//       transactionType,
+//       transactionAmount,
+//       description,
+//     };
+//     const doc = await addTransaction(body);
 
-    if (!doc) {
-      res.status(400).json({ msg: 'Could not add transaction' });
+//     if (!doc) {
+//       res.status(400).json({ msg: 'Could not add transaction' });
 
-      return;
-    }
+//       return;
+//     }
 
-    res.status(201).json({ doc });
+//     res.status(201).json({ doc });
 
-    return;
-  } catch (err) {
-    res.status(500).json({ err: err.message });
+//     return;
+//   } catch (err) {
+//     res.status(500).json({ err: err.message });
 
-    return;
-  }
-});
+//     return;
+//   }
+// });
 
 // view transactions by a user
 router.get('/:userId', async (req, res) => {
