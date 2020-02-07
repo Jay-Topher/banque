@@ -11,11 +11,11 @@ interface userDetails {
 }
 
 export async function getAllUsers() {
-  return Users.find({ deletedAt: null }).sort({ firstName: 'asc' });
+  return await Users.find({ deletedAt: null }).sort({ firstName: 'asc' });
 }
 
 export async function getAUser(userId: string) {
-  return Users.findById(userId);
+  return await Users.findById(userId, { deletedAt: null });
 }
 
 export async function createUser(userObj: userDetails) {
@@ -33,9 +33,12 @@ export async function updateUser(
   userId: string,
   userObj: Partial<userDetails>,
 ) {
-  return Users.findOneAndUpdate({ _id: userId }, userObj, { new: true });
+  return await Users.findOneAndUpdate({ _id: userId }, userObj, { new: true });
 }
 
 export async function deleteUser(userId: string) {
-  return Users.findOneAndUpdate({ _id: userId }, { deletedAt: new Date() });
+  return await Users.findOneAndUpdate(
+    { _id: userId },
+    { deletedAt: new Date() },
+  );
 }

@@ -2,6 +2,7 @@ import {
   createAccount,
   viewAnAccount,
   viewAllAccountsByUser,
+  deleteAccount,
 } from './../controllers/accounts';
 import { Router } from 'express';
 import joi from '@hapi/joi';
@@ -174,29 +175,25 @@ router.patch('/:userId', auth, async (req, res) => {
       .min(1)
       .max(255)
       .trim()
-      .lowercase()
-      .required(),
+      .lowercase(),
     lastName: joi
       .string()
       .min(1)
       .max(255)
       .trim()
-      .lowercase()
-      .required(),
+      .lowercase(),
     phone: joi
       .string()
       .pattern(/^(\+234[789][01]\d{8})$|^(0[789][01]\d{8})$/)
       .min(11)
       .max(14)
       .trim()
-      .lowercase()
-      .required(),
+      .lowercase(),
     email: joi
       .string()
       .email()
       .lowercase()
-      .allow('')
-      .required(),
+      .allow(''),
   });
 
   const { error, value } = schema.validate(req.body, {
@@ -225,15 +222,23 @@ router.patch('/:userId', auth, async (req, res) => {
 router.delete('/:userId', adminAuth, async (req, res) => {
   const userId = req.params.userId;
 
-  const doc = await deleteUser(userId);
+  const [deletedUser, deletedAccount] = await Promise.all([
+    deleteUser(userId),
+    deleteAccount(userId),
+  ]);
 
-  if (!doc) {
+  if (!deletedUser) {
     res.status(404).json({ message: 'User to delete not found' });
 
     return;
   }
+  if (!deletedAccount) {
+    res.status(404).json({ message: 'Account not found' });
 
-  res.status(200).json({ data: doc.id });
+    return;
+  }
+
+  res.status(200).json({ message: `user ${userId} deleted successfully` });
 
   return;
 });
