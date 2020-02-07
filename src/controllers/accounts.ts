@@ -135,7 +135,7 @@ export const viewAllAccounts = async () => {
 // view all account by a user (User)
 export const viewAllAccountsByUser = async (userId: string) => {
   try {
-    const accounts = await Accounts.find({ user: userId });
+    const accounts = await Accounts.find({ user: userId, deletedAt: null });
 
     if (!accounts) {
       throw Error('No accounts found');
@@ -163,7 +163,7 @@ export const viewAnAccount = async (accountId: string) => {
 };
 
 export async function deleteAccount(userId: string) {
-  return Accounts.findOneAndUpdate({ _id: userId }, { deletedAt: new Date() });
+  return Accounts.findOneAndUpdate({ user: userId }, { deletedAt: new Date() });
 }
 
 // check if account exists
