@@ -16,11 +16,13 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/user';
+import auth from '../middleware/auth';
+import adminAuth from '../middleware/adminAuth';
 
 const router = Router();
 
 // get all users
-router.get('/', (_req, res) => {
+router.get('/', adminAuth, (_req, res) => {
   getAllUsers()
     .then(data => {
       res.status(200).json({ data });
@@ -37,7 +39,7 @@ router.get('/', (_req, res) => {
 });
 
 // get a user
-router.get('/:userId', (req, res) => {
+router.get('/:userId', auth, (req, res) => {
   const userId = req.params.userId;
 
   getAUser(userId)
@@ -166,7 +168,7 @@ router.post('/', async (req, res) => {
 });
 
 // update user
-router.patch('/:userId', async (req, res) => {
+router.patch('/:userId', auth, async (req, res) => {
   const schema = joi.object({
     firstName: joi
       .string()
@@ -217,7 +219,7 @@ router.patch('/:userId', async (req, res) => {
 });
 
 // delete user
-router.delete('/:userId', async (req, res) => {
+router.delete('/:userId', adminAuth, async (req, res) => {
   const userId = req.params.userId;
 
   const [deletedUser, deletedAccount] = await Promise.all([
@@ -242,7 +244,7 @@ router.delete('/:userId', async (req, res) => {
 });
 
 // view a user's account
-router.get('/:userId/accounts/:accountId', async (req, res) => {
+router.get('/:userId/accounts/:accountId', auth, async (req, res) => {
   const userId = req.params.userId;
   const accountId = req.params.accountId;
 
@@ -270,7 +272,7 @@ router.get('/:userId/accounts/:accountId', async (req, res) => {
 });
 
 // view all accounts by user
-router.get('/:userId/accounts', async (req, res) => {
+router.get('/:userId/accounts', auth, async (req, res) => {
   const userId = req.params.userId;
 
   try {
