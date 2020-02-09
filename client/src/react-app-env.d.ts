@@ -1,6 +1,8 @@
 /// <reference types="react-scripts" />
 
 import { AxiosRequestConfig } from 'axios';
+import { Action } from 'redux';
+import { Props, ComponentType } from 'react';
 
 export interface IRegister {
   firstName: string;
@@ -15,5 +17,14 @@ export interface IRegister {
 export interface IConfig extends AxiosRequestConfig {
   header: {
     'Content-Type': string;
+  };
+}
+
+export interface IAction extends Action {
+  payload?: {
+    token?: string;
+    user?: object;
+    userAccount?: object;
+    userTransactions?: object[];
   };
 }
