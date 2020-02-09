@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { viewAllAccounts } from '../controllers/accounts';
+import { viewAllAccounts, viewAnAccount } from '../controllers/accounts';
 import adminAuth from '../middleware/adminAuth';
 
 const router = Router();
