@@ -24,3 +24,18 @@ export const register = (body: IRegister) => async (dispatch: Dispatch) => {
   }
 };
 
+// load user
+const loadUser = () => async (dispatch: Dispatch) => {
+  // @todo -load token into global headers
+
+  try {
+    const res = await axios.get('/api/v1/auth');
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: AUTH_ERROR });
+  }
+};
