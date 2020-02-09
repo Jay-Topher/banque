@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { Response } from 'express';
 
 import Users from '../models/users';
+import Accounts from '../models/accounts';
+import Transactions from '../models/transactions';
 import auth from '../middleware/auth';
 
 const router = Router();
@@ -23,10 +25,21 @@ const router = Router();
 
 router.get('/', auth, async (req: any, res: Response) => {
   try {
-    const user = await Users.findById({ _id: req.user.id }).select(
-      '-password, -pin',
-    ); // Dont return the password
-    res.json({ user });
+    const [user, userAccount, userTransactions] = await Promise.all([
+      await Users.findById({
+        _id: req.user.id,
+        deletedAt: null,
+      }).select('-password -pin -_id -__v -isAdmin'),
+      await Accounts.findOne({
+        user: req.user.id,
+        deletedAt: null,
+      }).select('-user -_id -__v -deletedAt'),
+      await Transactions.find({
+        user: req.user.id,
+        deletedAt: null,
+      }).select('-_id -__v -user'),
+    ]);
+    res.status(200).json({ user, userAccount, userTransactions });
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
