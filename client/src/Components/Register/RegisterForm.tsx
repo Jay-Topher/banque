@@ -1,3 +1,74 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { register } from '../../redux/actions/userActions';
+import './RegisterForm.scss';
+
+const RegisterForm = (props: any) => {
+  const { register } = props;
+  const initialState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    bvn: '',
+    password: '',
+    confirmPassword: '',
+    pin: '',
+    confirmPin: '',
+  };
+  const [user, setUser] = useState(initialState);
+  const [error, setError] = useState<string[]>([]);
+
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    bvn,
+    password,
+    confirmPassword,
+    pin,
+    confirmPin,
+  } = user;
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    return setUser({ ...user, [e.currentTarget.name]: e.currentTarget.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !pin ||
+      !confirmPin ||
+      !bvn ||
+      !phone
+    ) {
+      setError([...error, 'All fields are required']);
+      return;
+    }
+    // check password match
+    if (user.password !== user.confirmPassword) {
+      setError([...error, 'Passwords must match']);
+      return;
+    }
+    // check pin match
+    if (user.pin !== user.confirmPin) {
+      setError([...error, 'PINs must match']);
+      return;
+    }
+    const body = { firstName, lastName, email, bvn, password, pin, phone };
+
+    register(body);
+
+    return;
+  };
+
   return (
     <>
       <form className="register" onSubmit={handleSubmit}>
@@ -89,3 +160,8 @@
     </>
   );
 };
+
+export default connect(
+  null,
+  { register },
+)(RegisterForm);
