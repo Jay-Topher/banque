@@ -56,7 +56,7 @@ export const createAccount = async (
  * @param amount - The amount you wish to credit
  */
 export const creditAccount = async (accountNumber: string, amount: string) => {
-  const newAmount = Number(amount);
+  const newAmount = Number(amount) * 100;
 
   if (Number.isNaN(newAmount)) {
     throw Error('Invalid account number or amount');
@@ -89,7 +89,7 @@ export const creditAccount = async (accountNumber: string, amount: string) => {
  * @param amount - The amount you wish to remove
  */
 export const debitAccount = async (accountNumber: string, amount: string) => {
-  const newAmount = Number(amount);
+  const newAmount = Number(amount) * 100;
 
   if (Number.isNaN(newAmount)) {
     throw Error('Invalid account number or amount');
