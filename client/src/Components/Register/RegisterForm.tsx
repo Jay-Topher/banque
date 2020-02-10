@@ -78,6 +78,7 @@ const RegisterForm = (props: any) => {
           placeholder="First Name"
           onChange={handleChange}
           value={firstName}
+          aria-label="First Name"
           required
         />
         <input
@@ -86,6 +87,7 @@ const RegisterForm = (props: any) => {
           placeholder="Last Name"
           onChange={handleChange}
           value={lastName}
+          aria-label="Last Name"
           required
         />
         <input
@@ -95,6 +97,7 @@ const RegisterForm = (props: any) => {
           className="email"
           onChange={handleChange}
           value={email}
+          aria-label="Email"
           required
         />
         <input
@@ -103,6 +106,7 @@ const RegisterForm = (props: any) => {
           placeholder="Phone Number"
           onChange={handleChange}
           value={phone}
+          aria-label="Phone Number"
           required
         />
         <input
@@ -111,6 +115,7 @@ const RegisterForm = (props: any) => {
           placeholder="BVN"
           onChange={handleChange}
           value={bvn}
+          aria-label="Bank Verification Number (BVN)"
           required
         />
         <input
@@ -119,6 +124,7 @@ const RegisterForm = (props: any) => {
           placeholder="Password"
           onChange={handleChange}
           value={password}
+          aria-label="Password"
           required
         />
         <input
@@ -127,26 +133,29 @@ const RegisterForm = (props: any) => {
           placeholder="Confirm Password"
           onChange={handleChange}
           value={confirmPassword}
+          aria-label="Confirm Password"
           required
         />
         <input
           type="password"
           name="pin"
-          placeholder="4 -Digit PIN"
+          placeholder="4 - Digit PIN"
           maxLength={4}
           pattern="[0-9]{4}"
           onChange={handleChange}
           value={pin}
+          aria-label="4 - Digit Pin"
           required
         />
         <input
           type="password"
           name="confirmPin"
-          placeholder="Confirm 4 -Digit PIN"
+          placeholder="Confirm 4 - Digit PIN"
           maxLength={4}
           pattern="[0-9]{4}"
           onChange={handleChange}
           value={confirmPin}
+          aria-label="Confirm 4 - Digit Pin"
           required
         />
         <input type="submit" value="Register" className="reg-btn" />
