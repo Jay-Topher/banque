@@ -128,10 +128,17 @@ router.post('/', async (req, res) => {
       bcrypt.hash(value.pin, salt),
     ]);
 
-    const doc = await createUser(value);
-    const userId = doc.id;
-    const isAdmin = doc.isAdmin;
+    const user = await createUser(value);
+    const userId = user.id;
+    const isAdmin = user.isAdmin;
     const userAccount = await createAccount(userId);
+
+    const { firstName, lastName, phone, bvn, email } = user;
+    const newUser = { firstName, lastName, phone, bvn, email };
+    const newAccount = {
+      accountNumber: userAccount.accountNumber,
+      accountBalance: userAccount.accountBalance,
+    };
 
     const payload = {
       user: {
@@ -156,7 +163,7 @@ router.post('/', async (req, res) => {
         if (err) {
           throw err;
         }
-        res.status(201).json({ token, doc, userAccount });
+        res.status(201).json({ token, user: newUser, userAccount: newAccount });
       },
     );
 
