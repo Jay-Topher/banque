@@ -3,11 +3,13 @@ import './Card.scss';
 
 type MyProps = {
   children: string | JSX.Element;
-  size?: string;
+  addClass?: string;
 };
 
 const Card = (props: MyProps) => {
-  return <div className={`custom-card ${props.size}`}>{props.children}</div>;
+  return (
+    <div className={`custom-card ${props.addClass}`}>{props.children}</div>
+  );
 };
 
 export default Card;
