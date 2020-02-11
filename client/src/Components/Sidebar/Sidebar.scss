@@ -1,0 +1,32 @@
+@import '../../utils/variables';
+
+.sidebar {
+  width: 15rem;
+  height: 100vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($temp-blue, 0.96),
+      rgba($temp-blue, 0.96)
+    ),
+    url(https://res.cloudinary.com/winter-cake/image/upload/w_900/banque/piggy_qpzx6l.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  .logo {
+    // margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .menu_list {
+    display: grid;
+    grid-auto-rows: 3rem;
+    &:last-child {
+      margin-top: auto;
+    }
+  }
+}
+
+// li:last-child {
+//   position: absolute;
+//   top: 900px;
+// }
