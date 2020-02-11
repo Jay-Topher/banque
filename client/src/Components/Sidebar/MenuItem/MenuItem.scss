@@ -1,0 +1,39 @@
+@import '../../../utils/variables';
+
+.menu-item {
+  list-style-type: none;
+  color: #fff;
+  display: flex;
+
+  &:hover,
+  &:active {
+    background-color: #fff;
+    color: $temp-blue;
+
+    .menu-item-link {
+      color: $temp-blue;
+    }
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+
+    &:hover,
+    &:active {
+      color: $temp-blue;
+    }
+
+    .photo {
+      height: 1.5rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      color: #fff;
+    }
+  }
+}
