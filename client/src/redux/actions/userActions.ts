@@ -1,5 +1,5 @@
 import { REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR } from './types';
-import axios from 'axios';
+import axios from '../../axios';
 import { IRegister, IConfig } from '../../react-app-env';
 import { Dispatch } from 'redux';
 import setAuthToken from '../../utils/setAuthToken';
@@ -20,12 +20,13 @@ const loadUser = () => async (dispatch: Dispatch) => {
     });
     return;
   } catch (err) {
+    console.error(err.response.responseText);
     dispatch({ type: AUTH_ERROR });
   }
 };
 
 // register user
-export const register = (body: IRegister) => async (dispatch: Dispatch) => {
+export const register = (body: IRegister) => async (dispatch: any) => {
   const config: IConfig = {
     header: {
       'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ export const register = (body: IRegister) => async (dispatch: Dispatch) => {
       payload: response.data,
     });
 
-    loadUser();
+    dispatch(loadUser());
     return;
   } catch (err) {
     console.error(err.message);
