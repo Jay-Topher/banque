@@ -28,3 +28,9 @@ export interface IAction extends Action {
     userTransactions?: object[];
   };
 }
+
+export interface IMenuProp {
+  icon: string;
+  title: string;
+  place: string;
+}
