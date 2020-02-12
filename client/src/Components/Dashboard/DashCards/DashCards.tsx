@@ -1,4 +1,5 @@
 import React from 'react';
+import './DashCards.scss';
 import Icon from '../../../Icomoon/icon';
 import { IDashCard } from '../../../react-app-env';
 import { Link } from 'react-router-dom';
