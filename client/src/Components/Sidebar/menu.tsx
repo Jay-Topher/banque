@@ -31,7 +31,25 @@ export default {
       icon: 'wallet1, money1',
       description: 'My Account',
       place: '/account',
-      addClass: 'red',
+      addClass: 'col-red',
+    },
+    {
+      icon: 'wallet1, money1',
+      description: 'Add Account',
+      place: '/addaccount',
+      addClass: 'col-pink',
+    },
+    {
+      icon: 'exchange',
+      description: 'Transfers',
+      place: '/transfers',
+      addClass: 'col-green',
+    },
+    {
+      icon: 'notebook-list',
+      description: 'History',
+      place: '/statement',
+      addClass: 'col-blue',
     },
   ],
 };
