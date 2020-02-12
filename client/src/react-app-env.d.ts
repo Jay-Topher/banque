@@ -34,3 +34,18 @@ export interface IMenuProp {
   title: string;
   place: string;
 }
+
+export interface IUsernavProp {
+  name: string;
+}
+
+export interface IChildren {
+  children: JSX.Element[] | JSX.Element;
+}
+
+export interface IDashCard {
+  description: string;
+  icon: string;
+  addClass: string;
+  place: string;
+}
