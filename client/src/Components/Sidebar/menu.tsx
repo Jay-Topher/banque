@@ -3,27 +3,35 @@ export default {
     {
       title: 'Dashboard',
       link: '/dashboard',
-      icon: '/assets/dashboard.svg',
+      icon: 'dashboard',
     },
     {
       title: 'My Account',
       link: '/account',
-      icon: '/assets/account.svg',
+      icon: 'wallet1, money1',
     },
     {
       title: 'Account Statement',
       link: '/statement',
-      icon: '/assets/account_statement.svg',
+      icon: 'notebook-list',
     },
     {
       title: 'Transfers',
       link: '/transfers',
-      icon: '/assets/transfer.svg',
+      icon: 'exchange',
     },
     {
       title: 'Logout',
       link: '/',
-      icon: '/assets/logout.svg',
+      icon: 'exit',
+    },
+  ],
+  dashCards: [
+    {
+      icon: 'wallet1, money1',
+      description: 'My Account',
+      place: '/account',
+      addClass: 'red',
     },
   ],
 };
