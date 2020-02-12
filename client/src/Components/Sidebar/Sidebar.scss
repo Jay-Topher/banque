@@ -5,11 +5,11 @@
   height: 100vh;
   background-image: linear-gradient(
       to right bottom,
-      rgba($temp-blue, 0.96),
-      rgba($temp-blue, 0.96)
+      rgba($temp-blue, 0.9),
+      rgba($temp-blue, 0.9)
     ),
-    url(https://res.cloudinary.com/winter-cake/image/upload/w_900/banque/piggy_qpzx6l.jpg);
-  background-size: contain;
+    url(https://res.cloudinary.com/winter-cake/image/upload/v1581518649/banque/pile-of-gold-round-coins_zmdjw9.jpg);
+  background-size: cover;
   background-repeat: no-repeat;
 
   .logo {
@@ -18,11 +18,9 @@
   }
 
   .menu_list {
+    margin-top: 2rem;
     display: grid;
     grid-auto-rows: 3rem;
-    &:last-child {
-      margin-top: auto;
-    }
   }
 }
 
