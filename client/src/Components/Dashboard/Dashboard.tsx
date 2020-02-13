@@ -3,6 +3,7 @@ import './Dashboard.scss';
 import Card from '../Card/Card';
 import menu from '../Sidebar/menu';
 import DashCards from './DashCards/DashCards';
+import UserDetails from '../../common/UserDetails/UserDetails';
 
 const Dashboard = () => {
   return (
@@ -10,7 +11,13 @@ const Dashboard = () => {
       <h2>Dashboard</h2>
       <p>Overview and quick actions</p>
       <div className="main-content">
-        <Card addClass="v-small main-summary">Account Summary</Card>
+        <Card addClass="v-small main-summary">
+          <UserDetails
+            accountBalance={500}
+            accountName={'Jones Ogolo'}
+            accountNumber={'0051375648'}
+          />
+        </Card>
 
         {menu.dashCards.map(card => (
           <DashCards
