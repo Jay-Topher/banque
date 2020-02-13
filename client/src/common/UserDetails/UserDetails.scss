@@ -1,0 +1,39 @@
+.user-details {
+  .body {
+    display: flex;
+    justify-content: start;
+    margin-top: 1rem;
+
+    div {
+      flex: 1;
+    }
+
+    .current-balance {
+      .balance {
+        font-size: 2rem;
+        text-align: left;
+      }
+    }
+
+    .other-details {
+      .name {
+        text-transform: uppercase;
+        font-size: 1rem;
+      }
+      .label {
+        color: #777;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  .footer {
+    height: 2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    a {
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
+}
