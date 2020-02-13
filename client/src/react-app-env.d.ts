@@ -28,3 +28,24 @@ export interface IAction extends Action {
     userTransactions?: object[];
   };
 }
+
+export interface IMenuProp {
+  icon: string;
+  title: string;
+  place: string;
+}
+
+export interface IUsernavProp {
+  name: string;
+}
+
+export interface IChildren {
+  children: JSX.Element[] | JSX.Element;
+}
+
+export interface IDashCard {
+  description: string;
+  icon: string;
+  addClass: string;
+  place: string;
+}

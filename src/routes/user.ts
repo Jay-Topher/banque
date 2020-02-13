@@ -223,6 +223,7 @@ router.patch('/:userId', auth, async (req, res) => {
   }
 
   res.status(200).json({ data: doc.toJSON() });
+  return;
 });
 
 // delete user
