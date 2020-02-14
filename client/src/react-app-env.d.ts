@@ -55,3 +55,8 @@ export interface IUserDetails {
   accountName: string;
   accountNumber: string;
 }
+
+export interface IMiniHistory {
+  amount: number;
+  description: string;
+}
