@@ -21,11 +21,11 @@ export default (state = initialState, action: IAction) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
     case AUTH_SUCCESS:
-      // localStorage.setItem('token', action.payload?.token!)
+      localStorage.setItem('token', action.payload!.token!);
       return {
         ...state,
         isAuthenticated: true,
-        // user: action.payload?.user,
+        user: action.payload!.user,
         loading: false,
       };
     case USER_LOADED:
@@ -33,9 +33,9 @@ export default (state = initialState, action: IAction) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        // user: action.payload?.user,
-        // account: action.payload?.userAccount,
-        // transactions: action.payload?.userTransactions
+        user: action.payload!.user,
+        account: action.payload!.userAccount,
+        transactions: action.payload!.userTransactions,
       };
     case AUTH_START:
       return {
@@ -44,7 +44,7 @@ export default (state = initialState, action: IAction) => {
     case AUTH_FAIL:
       return {
         ...state,
-        // error: action.payload?.error
+        error: action.payload!.error,
       };
     default:
       return state;

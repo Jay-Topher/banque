@@ -5,7 +5,7 @@ import {
   AUTH_ERROR,
   AUTH_SUCCESS,
 } from './types';
-import axios from 'axios';
+import axios from '../../axios';
 import { Dispatch } from 'redux';
 import setAuthToken from '../../utils/setAuthToken';
 
@@ -18,7 +18,6 @@ const loadUser = () => async (dispatch: Dispatch) => {
 
   try {
     const res = await axios.get('/api/v1/auth');
-    console.log('..', res.data);
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -61,7 +60,6 @@ export function authLogin(body: ILogin) {
     };
     try {
       const response = await axios.post('/api/v1/auth', body, config);
-      console.log(response.data);
       dispatch({
         type: AUTH_SUCCESS,
         payload: response.data,
