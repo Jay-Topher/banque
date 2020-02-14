@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../../redux/actions/userActions';
 import './RegisterForm.scss';
+import { IState } from '../../react-app-env';
 
 const RegisterForm = (props: any) => {
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      props.history.push('/dashboard');
+    }
+  }, [props.isAuthenticated, props.history]);
+
   const { register } = props;
   const initialState = {
     firstName: '',
@@ -170,7 +177,13 @@ const RegisterForm = (props: any) => {
   );
 };
 
-export default connect(
-  null,
-  { register },
-)(RegisterForm);
+const mapStateToProps = (state: IState) => ({
+  isAuthenticated: state.user.isAuthenticated,
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { register },
+  )(RegisterForm),
+);
