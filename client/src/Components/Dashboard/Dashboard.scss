@@ -31,6 +31,10 @@
     .history {
       grid-column: 9 / -1;
       grid-row: 3 / 8;
+
+      .history-heading {
+        font-size: 0.8rem;
+      }
     }
   }
 }

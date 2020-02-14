@@ -49,3 +49,14 @@ export interface IDashCard {
   addClass: string;
   place: string;
 }
+
+export interface IUserDetails {
+  accountBalance: number;
+  accountName: string;
+  accountNumber: string;
+}
+
+export interface IMiniHistory {
+  amount: number;
+  description: string;
+}

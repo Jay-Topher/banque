@@ -3,6 +3,8 @@ import './Dashboard.scss';
 import Card from '../Card/Card';
 import menu from '../Sidebar/menu';
 import DashCards from './DashCards/DashCards';
+import UserDetails from '../../common/UserDetails/UserDetails';
+import MiniHistory from '../MiniHistory/MiniHistory';
 
 const Dashboard = () => {
   return (
@@ -10,7 +12,13 @@ const Dashboard = () => {
       <h2>Dashboard</h2>
       <p>Overview and quick actions</p>
       <div className="main-content">
-        <Card addClass="v-small main-summary">Account Summary</Card>
+        <Card addClass="v-small main-summary">
+          <UserDetails
+            accountBalance={500}
+            accountName={'Jones Ogolo'}
+            accountNumber={'0051375648'}
+          />
+        </Card>
 
         {menu.dashCards.map(card => (
           <DashCards
@@ -22,7 +30,10 @@ const Dashboard = () => {
           />
         ))}
         <Card addClass="v-small empty-space">Space</Card>
-        <Card addClass="v-small history">History</Card>
+        <Card addClass="v-small history">
+          <p className="history-heading">Recent Transactions</p>
+          <MiniHistory />
+        </Card>
       </div>
     </div>
   );
