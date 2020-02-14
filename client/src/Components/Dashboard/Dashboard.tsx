@@ -4,6 +4,7 @@ import Card from '../Card/Card';
 import menu from '../Sidebar/menu';
 import DashCards from './DashCards/DashCards';
 import UserDetails from '../../common/UserDetails/UserDetails';
+import MiniHistory from '../MiniHistory/MiniHistory';
 
 const Dashboard = () => {
   return (
@@ -29,7 +30,10 @@ const Dashboard = () => {
           />
         ))}
         <Card addClass="v-small empty-space">Space</Card>
-        <Card addClass="v-small history">History</Card>
+        <Card addClass="v-small history">
+          <p className="history-heading">Recent Transactions</p>
+          <MiniHistory />
+        </Card>
       </div>
     </div>
   );
