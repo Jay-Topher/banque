@@ -2,7 +2,7 @@ import React from 'react';
 import './Card.scss';
 
 type MyProps = {
-  children: string | JSX.Element;
+  children: string | JSX.Element | JSX.Element[];
   addClass?: string;
 };
 
