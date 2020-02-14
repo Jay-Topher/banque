@@ -14,6 +14,10 @@ export interface IRegister {
   pin: string;
 }
 
+export interface ILogin {
+  email: string;
+  password: string;
+}
 export interface IConfig extends AxiosRequestConfig {
   header: {
     'Content-Type': string;
@@ -26,5 +30,6 @@ export interface IAction extends Action {
     user?: object;
     userAccount?: object;
     userTransactions?: object[];
+    error?: string;
   };
 }
