@@ -40,9 +40,11 @@ router.get('/', auth, async (req: any, res: Response) => {
       }).select('-_id -__v -user'),
     ]);
     res.status(200).json({ user, userAccount, userTransactions });
+    return;
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
+    return;
   }
 });
 

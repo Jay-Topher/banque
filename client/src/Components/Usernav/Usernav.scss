@@ -1,0 +1,21 @@
+@import '../../utils/variables';
+
+.usernav {
+  height: 8vh;
+  width: 100%;
+  display: flex;
+  background-color: $temp-blue;
+  color: #fff;
+  align-items: center;
+  justify-content: space-between;
+
+  .name {
+    margin-left: 2rem;
+    font-size: 1.2rem;
+    // font-weight: 700;
+  }
+
+  .logout {
+    margin-right: 2rem;
+  }
+}

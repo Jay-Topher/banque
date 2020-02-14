@@ -33,3 +33,35 @@ export interface IAction extends Action {
     error?: string;
   };
 }
+
+export interface IMenuProp {
+  icon: string;
+  title: string;
+  place: string;
+}
+
+export interface IUsernavProp {
+  name: string;
+}
+
+export interface IChildren {
+  children: JSX.Element[] | JSX.Element;
+}
+
+export interface IDashCard {
+  description: string;
+  icon: string;
+  addClass: string;
+  place: string;
+}
+
+export interface IUserDetails {
+  accountBalance: number;
+  accountName: string;
+  accountNumber: string;
+}
+
+export interface IMiniHistory {
+  amount: number;
+  description: string;
+}

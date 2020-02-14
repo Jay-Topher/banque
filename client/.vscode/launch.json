@@ -7,15 +7,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch App Server",
-      "protocol": "inspector",
-      "program": "${workspaceFolder}/bin/www",
-      "sourceMaps": true,
-      "smartStep": true,
-      "env": {
-        "PORT": "3005",
-        "NODE_ENV": "development"
-      }
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\start"
     }
   ]
 }

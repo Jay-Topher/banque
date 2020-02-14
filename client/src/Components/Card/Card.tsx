@@ -1,13 +1,15 @@
 import React from 'react';
 import './Card.scss';
 
-type CardProps = {
-  children: string | JSX.Element;
-  size?: string;
+type MyProps = {
+  children: string | JSX.Element | JSX.Element[];
+  addClass?: string;
 };
 
-const Card = (props: CardProps) => {
-  return <div className={`custom-card ${props.size}`}>{props.children}</div>;
+const Card = (props: MyProps) => {
+  return (
+    <div className={`custom-card ${props.addClass}`}>{props.children}</div>
+  );
 };
 
 export default Card;

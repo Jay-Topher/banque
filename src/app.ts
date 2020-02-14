@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'path';
 import logger from 'morgan';
 import graphqlHTTP from 'express-graphql';
+import cors from 'cors';
 
 import indexRouter from './routes/index';
 import userRouter from './routes/user';
@@ -22,6 +23,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/api/v1/users', userRouter);
