@@ -8,6 +8,7 @@ import Sidebar from './Components/Sidebar/Sidebar';
 import Main from './Components/Main/Main';
 import Usernav from './Components/Usernav/Usernav';
 import Dashboard from './Components/Dashboard/Dashboard';
+// import LoginCard from './Components/Login/LoginCard';
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <div className="App">
           <Sidebar />
           {/* <RegisterCard /> */}
+          {/* <LoginCard /> */}
           <Main>
             <Usernav name="Jones Ogolo" />
             <Dashboard />
