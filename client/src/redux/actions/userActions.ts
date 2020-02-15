@@ -1,6 +1,11 @@
-import { REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR } from './types';
+import { IRegister, IConfig, ILogin } from '../../react-app-env';
+import {
+  REGISTER_SUCCESS,
+  USER_LOADED,
+  AUTH_ERROR,
+  AUTH_SUCCESS,
+} from './types';
 import axios from '../../axios';
-import { IRegister, IConfig } from '../../react-app-env';
 import { Dispatch } from 'redux';
 import setAuthToken from '../../utils/setAuthToken';
 
@@ -13,7 +18,6 @@ const loadUser = () => async (dispatch: Dispatch) => {
 
   try {
     const res = await axios.get('/api/v1/auth');
-    console.log('..', res.data);
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -34,7 +38,6 @@ export const register = (body: IRegister) => async (dispatch: any) => {
   };
   try {
     const response = await axios.post('/api/v1/users', body, config);
-    console.log(response.data);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
@@ -46,3 +49,25 @@ export const register = (body: IRegister) => async (dispatch: any) => {
     console.error(err.message);
   }
 };
+
+//Authorize and login user
+export function authLogin(body: ILogin) {
+  return async (dispatch: any) => {
+    const config: IConfig = {
+      header: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await axios.post('/api/v1/auth', body, config);
+      dispatch({
+        type: AUTH_SUCCESS,
+        payload: response.data,
+      });
+
+      dispatch(loadUser());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}

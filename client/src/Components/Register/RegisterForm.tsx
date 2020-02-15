@@ -169,7 +169,7 @@ const RegisterForm = (props: any) => {
       </form>
       <div className="info">
         Already a member?{' '}
-        <Link className="login" to="/">
+        <Link className="login" to="/login">
           Login
         </Link>
       </div>
