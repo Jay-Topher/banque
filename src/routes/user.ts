@@ -18,6 +18,10 @@ import {
 } from '../controllers/user';
 import auth from '../middleware/auth';
 import adminAuth from '../middleware/adminAuth';
+import {
+  viewTransactionsByUser,
+  viewATransaction,
+} from '../controllers/transactions';
 
 const router = Router();
 
@@ -288,6 +292,62 @@ router.get('/:userId/accounts', auth, async (req, res) => {
 
     if (!doc) {
       res.status(404).json({ msg: 'Accounts not found' });
+
+      return;
+    }
+
+    res.status(200).json({ doc });
+
+    return;
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+
+    return;
+  }
+});
+
+// view transactions by a user
+router.get('/:userId/transactions', auth, async (req, res) => {
+  const userId = req.params.userId;
+  if (!userId) {
+    res.status(400).json({ msg: 'Invalid url' });
+
+    return;
+  }
+
+  try {
+    const doc = await viewTransactionsByUser(userId);
+
+    if (!doc) {
+      res.status(400).json({ msg: 'No transactions yet' });
+
+      return;
+    }
+
+    res.status(200).json({ doc });
+
+    return;
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+
+    return;
+  }
+});
+
+// view a transaction
+router.get('/:userId/transactions/:transactionId', auth, async (req, res) => {
+  const transactionId = req.params.transactionId;
+  if (!transactionId) {
+    res.status(400).json({ msg: 'Incomplete Url' });
+
+    return;
+  }
+
+  try {
+    const doc = await viewATransaction(transactionId);
+
+    if (!doc) {
+      res.status(404).json({ err: 'Transaction not found' });
 
       return;
     }

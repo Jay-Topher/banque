@@ -65,3 +65,30 @@ export interface IMiniHistory {
   amount: number;
   description: string;
 }
+
+export interface IState {
+  user: IUserState;
+}
+
+export interface IUserState {
+  token?: string | null;
+  user?: IUser | null;
+  account?: IUserAccount | null;
+  transactions: null;
+  isAuthenticated: boolean | null;
+  loading: boolean;
+  error: any;
+}
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  bvn: string;
+  email: string;
+}
+
+export interface IUserAccount {
+  accountNumber: string;
+  accountBalance: number;
+}
