@@ -17,23 +17,20 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Route exact path="/register" component={RegisterCard} />
-        <div className="App">
-          <Sidebar />
-          <Main>
-            <Usernav name="Jones Ogolo" />
-            <SuspenseBoundary>
-              <Switch>
+        <Switch>
+          <SuspenseBoundary>
+            <Route exact path="/register" component={RegisterCard} />
+          </SuspenseBoundary>
+          <div className="App">
+            <Sidebar />
+            <Main>
+              <SuspenseBoundary>
+                <Usernav name="Jones Ogolo" />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                {/* <Dashboard />
-                </PrivateRoute> */}
-
-                {/*<Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/dashboard" component={Dashboard} /> */}
-              </Switch>
-            </SuspenseBoundary>
-          </Main>
-        </div>
+              </SuspenseBoundary>
+            </Main>
+          </div>
+        </Switch>
       </Router>
     </Provider>
   );
