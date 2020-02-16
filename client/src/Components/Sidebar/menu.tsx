@@ -2,7 +2,7 @@ export default {
   user: [
     {
       title: 'Dashboard',
-      link: '/dashboard',
+      link: '/user',
       icon: 'dashboard',
     },
     {
