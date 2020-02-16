@@ -5,7 +5,6 @@ import { IState } from '../react-app-env';
 
 const PrivateRoute = ({
   isAuthenticated,
-  loading,
   component: Component,
   ...rest
 }: any) => {
@@ -13,7 +12,7 @@ const PrivateRoute = ({
     <Route
       {...rest}
       render={props =>
-        !isAuthenticated && loading ? (
+        !isAuthenticated ? (
           <Redirect to="/register" />
         ) : (
           <Component {...props} />
@@ -25,7 +24,6 @@ const PrivateRoute = ({
 
 const mapStateToProps = (state: IState) => ({
   isAuthenticated: state.user.isAuthenticated,
-  loading: state.user.loading,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
