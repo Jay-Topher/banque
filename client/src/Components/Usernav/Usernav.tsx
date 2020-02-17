@@ -23,8 +23,8 @@ const Usernav = ({
 };
 
 const mapStateToProps = (state: IState) => ({
-  firstName: state.user.user!.firstName,
-  lastName: state.user.user!.lastName,
+  firstName: state.user.user?.firstName!,
+  lastName: state.user.user?.lastName!,
 });
 
 export default connect(mapStateToProps)(Usernav);
