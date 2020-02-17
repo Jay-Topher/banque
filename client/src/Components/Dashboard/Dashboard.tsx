@@ -5,8 +5,13 @@ import menu from '../Sidebar/menu';
 import DashCards from './DashCards/DashCards';
 import UserDetails from '../../common/UserDetails/UserDetails';
 import MiniHistory from '../MiniHistory/MiniHistory';
+import { connect } from 'react-redux';
+import { IState } from '../../react-app-env';
 
-const Dashboard = () => {
+const Dashboard = ({ user }: IState) => {
+  if (user === null) {
+    return <>Loading...</>;
+  }
   return (
     <div className="dashboard">
       <h2>Dashboard</h2>
@@ -14,9 +19,9 @@ const Dashboard = () => {
       <div className="main-content">
         <Card addClass="v-small main-summary">
           <UserDetails
-            accountBalance={500}
-            accountName={'Jones Ogolo'}
-            accountNumber={'0051375648'}
+            accountBalance={user.account!.accountBalance}
+            accountName={`${user.user!.firstName} ${user.user!.lastName}`}
+            accountNumber={user.account!.accountNumber}
           />
         </Card>
 
@@ -32,11 +37,15 @@ const Dashboard = () => {
         <Card addClass="v-small empty-space">Space</Card>
         <Card addClass="v-small history">
           <p className="history-heading">Recent Transactions</p>
-          <MiniHistory />
+          <MiniHistory transactions={user.transactions!} />
         </Card>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state: IState) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Dashboard);

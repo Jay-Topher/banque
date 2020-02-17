@@ -92,3 +92,15 @@ export interface IUserAccount {
   accountNumber: string;
   accountBalance: number;
 }
+
+export interface ITransaction {
+  benefactor: string;
+  transactionType: string;
+  description: string;
+  transactionAmount: number;
+  transactionDate: Date;
+}
+
+export interface IMiniHistoryProp {
+  transactions: ITransaction[];
+}
