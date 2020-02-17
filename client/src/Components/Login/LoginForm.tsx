@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LoginForm.scss';
 import Button from '../Button/Button';
@@ -7,6 +7,12 @@ import { connect } from 'react-redux';
 import { authLogin } from '../../redux/actions/userActions';
 
 function LoginForm(props: any) {
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      props.history.push('/user');
+    }
+  }, [props.isAuthenticated, props.history]);
+
   const { authLogin } = props;
   const initialState = {
     email: '',
@@ -35,10 +41,11 @@ function LoginForm(props: any) {
   };
   return (
     <>
-      <form className="register" onSubmit={handleSubmit}>
+      <form className="login" onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
+          className="email"
           placeholder="Email"
           onChange={handleChange}
           value={email}
@@ -49,6 +56,7 @@ function LoginForm(props: any) {
         <input
           type="password"
           name="password"
+          className="password"
           placeholder="Password"
           onChange={handleChange}
           value={password}
@@ -60,7 +68,7 @@ function LoginForm(props: any) {
       </form>
       <div className="info">
         Don't have an account?{' '}
-        <Link className="login" to="/register">
+        <Link className="login1" to="/register">
           Register
         </Link>
       </div>
