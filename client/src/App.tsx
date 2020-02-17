@@ -15,21 +15,21 @@ const LoginCard = lazy(() => import('./Components/Login/LoginCard'));
 const App = () => {
   return (
     <Router>
-      <SuspenseBoundary>
+      {/* <SuspenseBoundary>
         <Switch>
           <Route exact path="/register" component={RegisterCard} />
           <Route path="/login" component={LoginCard} />
-          <Route exact path="/user" component={UserView} />
+          <PrivateRoute exact path="/user" component={UserView} />
         </Switch>
-      </SuspenseBoundary>
+      </SuspenseBoundary> */}
       {/* /////////////////////////////development//////////////////////////////////////// */}
-      {/* <div className="App">
+      <div className="App">
         <Sidebar />
         <Main>
           <Usernav />
           <TransferView />
         </Main>
-      </div> */}
+      </div>
     </Router>
   );
 };
