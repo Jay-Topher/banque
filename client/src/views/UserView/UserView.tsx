@@ -11,7 +11,7 @@ const UserView = () => {
     <div className="UserView">
       <Sidebar />
       <Main>
-        <Usernav name="Jones Ogolo" />
+        <Usernav />
         <Switch>
           <Route exact path="/user">
             <Dashboard />

@@ -1,16 +1,30 @@
 import React from 'react';
 import './Usernav.scss';
-import { IUsernavProp } from '../../react-app-env';
+import { IState } from '../../react-app-env';
+import { connect } from 'react-redux';
 
-const Usernav = ({ name }: IUsernavProp) => {
+const Usernav = ({
+  firstName,
+  lastName,
+}: {
+  firstName?: string;
+  lastName?: string;
+}) => {
   return (
     <nav className="usernav">
       <div className="name">
-        <p>Welcome, {name}</p>
+        <p>
+          Welcome, {firstName} {lastName}
+        </p>
       </div>
       <div className="logout">Logout</div>
     </nav>
   );
 };
 
-export default Usernav;
+const mapStateToProps = (state: IState) => ({
+  firstName: state.user.user!.firstName,
+  lastName: state.user.user!.lastName,
+});
+
+export default connect(mapStateToProps)(Usernav);
