@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './LoginForm.scss';
 import Button from '../Button/Button';
 import { styleButton } from './style';
 import { connect } from 'react-redux';
 import { authLogin } from '../../redux/actions/userActions';
+import { IState } from '../../react-app-env';
 
 function LoginForm(props: any) {
   useEffect(() => {
@@ -75,7 +76,12 @@ function LoginForm(props: any) {
     </>
   );
 }
-export default connect(
-  null,
-  { authLogin },
-)(LoginForm);
+const mapStateToProps = (state: IState) => ({
+  isAuthenticated: state.user.isAuthenticated,
+});
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { authLogin },
+  )(LoginForm),
+);
