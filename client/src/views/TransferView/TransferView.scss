@@ -26,6 +26,21 @@
         margin-top: 1rem;
         border-radius: 3px;
         padding: 1.5rem 4rem;
+        font-size: 0.9rem;
+
+        &:hover {
+          background-color: darken($color: $temp-blue, $amount: 10%);
+        }
+
+        div {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-evenly;
+
+          .icon {
+            width: 1.6rem;
+          }
+        }
       }
     }
   }
