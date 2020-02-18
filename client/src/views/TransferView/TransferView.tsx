@@ -4,6 +4,7 @@ import Card from '../../Components/Card/Card';
 import { Link } from 'react-router-dom';
 import FrequentTransfers from '../../Components/FrequentTransfers/FrequentTransfers';
 import TransferHistory from '../../Components/TransferHistory/TransferHistory';
+import Icon from '../../Icomoon/icon';
 
 const TransferView = () => {
   return (
@@ -13,7 +14,12 @@ const TransferView = () => {
       <div className="transfer-view-grid">
         <Card addClass="v-small new-transfer">
           <p className="card-heading">New Transfer</p>
-          <Link to="/">New Transfer</Link>
+          <Link to="/">
+            <div>
+              <Icon icon="wallet, money" className="icon"></Icon>
+              <span>New Transfer</span>
+            </div>
+          </Link>
         </Card>
         <FrequentTransfers />
         <TransferHistory />
