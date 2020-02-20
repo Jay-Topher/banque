@@ -3,6 +3,8 @@ import {
   viewAnAccount,
   viewAllAccountsByUser,
   deleteAccount,
+  getAccount,
+  creditAccount,
 } from './../controllers/accounts';
 import { Router } from 'express';
 import joi from '@hapi/joi';
@@ -16,11 +18,12 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/user';
-import auth from '../middleware/auth';
+import auth, { IReq } from '../middleware/auth';
 import adminAuth from '../middleware/adminAuth';
 import {
   viewTransactionsByUser,
   viewATransaction,
+  addTransaction,
 } from '../controllers/transactions';
 
 const router = Router();
@@ -356,6 +359,53 @@ router.get('/:userId/transactions/:transactionId', auth, async (req, res) => {
 
     return;
   } catch (err) {
+    res.status(500).json({ err: err.message });
+
+    return;
+  }
+});
+
+// credit your account
+router.patch('/:userId/accounts/:accountNumber/credit', auth, async (req: IReq, res) => {
+  const amount = req.body.amount;
+  const {userId, accountNumber} = req.params.userId;
+  if (userId !== req.user?.id) {
+    res.status(401).json({err: 'Unauthorized'})
+
+    return;
+  }
+
+  try {
+    const accountToCredit = await getAccount(accountNumber);
+
+    if (!accountToCredit) {
+      res.status(404).json({ err: 'Account not found' });
+
+      return;
+    }
+
+    const userAccountNumber = accountToCredit.accountNumber;
+
+    const credittedAccount = await creditAccount(userAccountNumber, amount);
+
+    if (!credittedAccount) {
+      res.status(400).json({ err: 'Unable to credit' });
+
+      return;
+    }
+
+    const newTransaction = await addTransaction({
+      user: userId,
+      benefactor: userId,
+      transactionType: 'CREDIT',
+      transactionAmount: Number(amount),
+    });
+
+    res.status(200).json({ credittedAccount, newTransaction });
+
+    return;
+  } catch (err) {
+    console.log('failed');
     res.status(500).json({ err: err.message });
 
     return;
