@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from '../../Components/Card/Card';
 import './Accountview.scss';
 import { connect } from 'react-redux';
 import { IState } from '../../react-app-env';
