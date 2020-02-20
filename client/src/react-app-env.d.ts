@@ -56,9 +56,10 @@ export interface IDashCard {
 }
 
 export interface IUserDetails {
-  accountBalance: number;
+  accountBalance: number | any;
   accountName: string;
-  accountNumber: string;
+  accountNumber: string | any;
+  more?: boolean;
 }
 
 export interface IMiniHistory {
@@ -74,7 +75,7 @@ export interface IUserState {
   token?: string | null;
   user?: IUser | null;
   account?: IUserAccount | null;
-  transactions: null;
+  transactions?: ITransaction | any;
   isAuthenticated: boolean | null;
   loading: boolean;
   error: any;
