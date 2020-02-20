@@ -5,7 +5,6 @@ import { currencyFormat } from '../../utils/helpers';
 import { IMiniHistoryProp } from '../../react-app-env';
 
 const AccountStatement = ({ transactions }: IMiniHistoryProp) => {
-  console.log(transactions);
   return (
     <Card addClass="v-small account-history">
       <div className="table-heading">
