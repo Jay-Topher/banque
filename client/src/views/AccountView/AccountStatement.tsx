@@ -2,13 +2,7 @@ import React from 'react';
 import './AccountStatement.scss';
 import Card from '../../Components/Card/Card';
 import { currencyFormat } from '../../utils/helpers';
-import {
-  IState,
-  ITransaction,
-  IMiniHistoryProp,
-  IUserState,
-} from '../../react-app-env';
-import { connect } from 'react-redux';
+import { IMiniHistoryProp } from '../../react-app-env';
 
 const AccountStatement = ({ transactions }: IMiniHistoryProp) => {
   console.log(transactions);

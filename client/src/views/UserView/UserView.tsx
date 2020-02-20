@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './UserView.scss';
 import { Route, Switch } from 'react-router';
 import Sidebar from '../../Components/Sidebar/Sidebar';
