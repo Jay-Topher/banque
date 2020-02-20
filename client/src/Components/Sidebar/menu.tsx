@@ -2,22 +2,22 @@ export default {
   user: [
     {
       title: 'Dashboard',
-      link: '/user',
+      link: '/user/dashboard',
       icon: 'dashboard',
     },
     {
       title: 'My Account',
-      link: '/account',
+      link: '/user/account',
       icon: 'wallet1, money1',
     },
     {
       title: 'Account Statement',
-      link: '/statement',
+      link: '/user/statement',
       icon: 'notebook-list',
     },
     {
       title: 'Transfers',
-      link: '/transfers',
+      link: '/user/transfers',
       icon: 'exchange',
     },
     {
