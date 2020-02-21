@@ -15,7 +15,7 @@ export async function getAllUsers() {
 }
 
 export async function getAUser(userId: string) {
-  return await Users.findById(userId, { deletedAt: null });
+  return await Users.findOne({ _id: userId, deletedAt: null });
 }
 
 export async function createUser(userObj: userDetails) {
