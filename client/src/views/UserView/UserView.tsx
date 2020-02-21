@@ -8,6 +8,7 @@ import Dashboard from '../../Components/Dashboard/Dashboard';
 import AccountView from '../AccountView/AccountView';
 import SuspenseBoundary from '../../common/Boundary/SuspenseBoundary';
 import TransferView from '../TransferView/TransferView';
+import StatementDetailView from '../AccountView/StatementDetailView';
 
 const UserView = () => {
   return (
@@ -22,6 +23,9 @@ const UserView = () => {
             </Route>
             <Route exact path="/dashboard/account">
               <AccountView />
+            </Route>
+            <Route exact path="/dashboard/statement">
+              <StatementDetailView />
             </Route>
             <Route exact path="/dashboard/transfers">
               <TransferView />

@@ -14,7 +14,7 @@ const UserDetails = ({
       <div className="heading">{!more ? <h4>Account Summary</h4> : null}</div>
       <div className="body">
         <div className="current-balance">
-          <p className="balance">₦{accountBalance}</p>
+          <p className="balance">{accountBalance}</p>
           <p className="current">current balance</p>
         </div>
         <div className="other-details">
