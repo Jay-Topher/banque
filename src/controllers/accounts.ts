@@ -7,18 +7,17 @@ import { iAccountSchema } from '../models/accounts';
  * @param {string} userId - The ID of the account owner
  * @returns {iAccountSchema} - The owner's account number.
  */
-export const getAccount = async (userId: string): Promise<iAccountSchema> => {
+export const getAccount = async (accountNumber: string) => {
   try {
-    const accountNumber = await Accounts.findOne(
-      { user: userId },
-      'accountNumber',
-    );
+    const gottenAccount = await Accounts.findOne({
+      accountNumber: accountNumber,
+    });
 
-    if (!accountNumber) {
+    if (!gottenAccount) {
       throw Error('No such account');
     }
 
-    return accountNumber;
+    return gottenAccount;
   } catch (err) {
     console.error('no account', err.message);
     throw Error(err.message);
