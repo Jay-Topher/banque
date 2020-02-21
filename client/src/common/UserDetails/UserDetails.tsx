@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './UserDetails.scss';
 import { IUserDetails } from '../../react-app-env';
-import { currencyFormat } from '../../utils/helpers';
 
 const UserDetails = ({
   accountBalance,
@@ -15,7 +14,7 @@ const UserDetails = ({
       <div className="heading">{!more ? <h4>Account Summary</h4> : null}</div>
       <div className="body">
         <div className="current-balance">
-          <p className="balance">{currencyFormat(accountBalance)}</p>
+          <p className="balance">{accountBalance}</p>
           <p className="current">current balance</p>
         </div>
         <div className="other-details">

@@ -5,6 +5,7 @@ import UserDetails from '../../common/UserDetails/UserDetails';
 import { connect } from 'react-redux';
 import { IState } from '../../react-app-env';
 import AccountStatement from './AccountStatement';
+import { currencyFormat } from '../../utils/helpers';
 
 function AccountView({ user }: IState) {
   return (
@@ -24,7 +25,7 @@ function AccountView({ user }: IState) {
             </div>
           </div>
           <UserDetails
-            accountBalance={user.account!.accountBalance}
+            accountBalance={currencyFormat(user.account!.accountBalance)}
             accountName={`${user.user!.firstName} ${user.user!.lastName}`}
             accountNumber={user.account!.accountNumber}
             more={true}
