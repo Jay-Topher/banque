@@ -1,0 +1,31 @@
+@import '../../utils/variables';
+
+.navbar {
+  background-color: #fff;
+  width: 100vw;
+  box-shadow: 0px 4px 3px 1px rgba(0, 0, 0, 0.15);
+  z-index: 3;
+  position: sticky;
+  top: 0;
+
+  .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+
+    .navlinks {
+      flex: 1;
+      display: flex;
+      justify-content: space-evenly;
+
+      a {
+        text-decoration: none;
+        color: $temp-blue;
+      }
+    }
+    .logo {
+      flex: 2;
+    }
+  }
+}
