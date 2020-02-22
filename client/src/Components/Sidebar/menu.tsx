@@ -52,4 +52,26 @@ export default {
       addClass: 'col-blue',
     },
   ],
+  navbar: [
+    {
+      linkName: 'Home',
+      link: '/',
+    },
+    {
+      linkName: 'About',
+      link: '/about',
+    },
+    {
+      linkName: 'FAQs',
+      link: '/faq',
+    },
+    {
+      linkName: 'Login',
+      link: '/login',
+    },
+    {
+      linkName: 'Sign Up',
+      link: '/register',
+    },
+  ],
 };
