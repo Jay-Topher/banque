@@ -74,4 +74,24 @@ export default {
       link: '/register',
     },
   ],
+  secondSection: [
+    {
+      icon: 'user-check',
+      title: 'User Friendly',
+      description:
+        'Our app boasts great user experience and is easy to use on both mobile and desktop',
+    },
+    {
+      icon: 'combination-lock',
+      title: 'Secure',
+      description:
+        'Our app boasts great security features for both your money and personal data.',
+    },
+    {
+      icon: 'rocket',
+      title: 'Fast Transactions',
+      description:
+        'Transactions occur literally in seconds and you can have quick access to money when you want',
+    },
+  ],
 };
