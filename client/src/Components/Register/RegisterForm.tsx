@@ -169,7 +169,7 @@ const RegisterForm = (props: any) => {
       </form>
       <div className="info">
         Already a member?{' '}
-        <Link className="login" to="/login">
+        <Link className="login2" to="/login">
           Login
         </Link>
       </div>
@@ -181,9 +181,4 @@ const mapStateToProps = (state: IState) => ({
   isAuthenticated: state.user.isAuthenticated,
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { register },
-  )(RegisterForm),
-);
+export default withRouter(connect(mapStateToProps, { register })(RegisterForm));

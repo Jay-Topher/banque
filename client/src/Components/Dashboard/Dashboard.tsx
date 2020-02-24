@@ -7,6 +7,7 @@ import UserDetails from '../../common/UserDetails/UserDetails';
 import MiniHistory from '../MiniHistory/MiniHistory';
 import { connect } from 'react-redux';
 import { IState } from '../../react-app-env';
+import { currencyFormat } from '../../utils/helpers';
 
 const Dashboard = ({ user }: IState) => {
   if (user === null) {
@@ -19,7 +20,7 @@ const Dashboard = ({ user }: IState) => {
       <div className="main-content">
         <Card addClass="v-small main-summary">
           <UserDetails
-            accountBalance={user.account!.accountBalance}
+            accountBalance={currencyFormat(user.account!.accountBalance)}
             accountName={`${user.user!.firstName} ${user.user!.lastName}`}
             accountNumber={user.account!.accountNumber}
           />

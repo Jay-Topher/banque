@@ -1,0 +1,28 @@
+.table {
+  width: 100%;
+  text-align: left;
+
+  th,
+  td {
+    border-bottom: 1px solid #999;
+    padding: 1rem;
+  }
+}
+
+.table-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .search {
+    margin-right: 2rem;
+    margin-left: auto;
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 15rem;
+    &::placeholder {
+      font-family: 'Montserrat';
+      font-size: 0.7rem;
+    }
+  }
+}

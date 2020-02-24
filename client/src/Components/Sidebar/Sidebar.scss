@@ -12,8 +12,12 @@
   background-size: cover;
   background-repeat: no-repeat;
 
+  // sticky nav
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
   .logo {
-    // margin-top: 1rem;
     padding: 1rem;
   }
 
@@ -22,9 +26,11 @@
     display: grid;
     grid-auto-rows: 3rem;
   }
-}
 
-// li:last-child {
-//   position: absolute;
-//   top: 900px;
-// }
+  @media screen and (max-width: 900px) {
+    position: absolute;
+    left: -280px;
+    transition: left 2s;
+    width: 200px;
+  }
+}

@@ -6,6 +6,7 @@ import PrivateRoute from './Routing/PrivateRoute';
 
 const UserView = lazy(() => import('./views/UserView/UserView'));
 const RegisterCard = lazy(() => import('./Components/Register/RegisterCard'));
+const LoginCard = lazy(() => import('./Components/Login/LoginCard'));
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
       <SuspenseBoundary>
         <Switch>
           <Route exact path="/register" component={RegisterCard} />
-          <PrivateRoute exact path="/user" component={UserView} />
+          <Route path="/login" component={LoginCard} />
+          <PrivateRoute path="/dashboard" component={UserView} />
         </Switch>
       </SuspenseBoundary>
     </Router>
