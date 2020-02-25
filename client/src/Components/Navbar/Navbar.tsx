@@ -4,11 +4,12 @@ import menu from '../Sidebar/menu';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+  const logo = 'assets/banque_logo_blue.svg';
   return (
     <nav className="navbar">
       <div className="container-fluid main-nav">
         <div className="logo">
-          <h2>LOGO</h2>
+          <img src={logo} alt="logo" className="logo" />
         </div>
         <div className="navlinks">
           {menu.navbar.map(item => (
