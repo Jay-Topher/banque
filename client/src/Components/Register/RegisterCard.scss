@@ -11,8 +11,22 @@
   align-items: center;
   flex-direction: column;
 
+  @media only screen and (max-width: 700px) {
+    width: 90vw;
+    margin: 2rem auto;
+
+    .custom-card {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+  }
+
   h2 {
     font-size: 3rem;
+    @media only screen and (max-width: 700px) {
+      margin-top: 7rem;
+    }
   }
   p {
     font-size: 1.2rem;
