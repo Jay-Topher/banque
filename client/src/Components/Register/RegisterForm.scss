@@ -8,6 +8,10 @@ $temp-blue: #2e4fef;
   grid-auto-rows: 2.5rem;
   max-width: 30rem;
 
+  @media only screen and (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+
   input {
     border: 1px solid #ddd;
     border-radius: 3px;
