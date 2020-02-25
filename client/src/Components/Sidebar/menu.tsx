@@ -110,4 +110,26 @@ export default {
       name: 'Jennifer Fritz',
     },
   ],
+  footerNav: [
+    {
+      name: 'Home',
+      link: '/',
+    },
+    {
+      name: 'About',
+      link: '/about',
+    },
+    {
+      name: 'FAQs',
+      link: '/faq',
+    },
+    {
+      name: 'Sign up',
+      link: '/register',
+    },
+    {
+      name: 'Login',
+      link: '/login',
+    },
+  ],
 };
