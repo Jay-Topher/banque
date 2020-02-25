@@ -4,6 +4,7 @@ import FirstSection from '../../Components/FirstSection/FirstSection';
 import SecondSection from '../../Components/SecondSection/SecondSection';
 import ThirdSection from '../../Components/ThirdSection/ThirdSection';
 import FeedBackSection from '../../Components/FeedBackSection/FeedBackSection';
+import Footer from '../../Components/Footer/Footer';
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <SecondSection />
       <ThirdSection />
       <FeedBackSection />
+      <Footer />
     </div>
   );
 };
