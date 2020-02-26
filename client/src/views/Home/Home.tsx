@@ -5,6 +5,7 @@ import SecondSection from '../../Components/SecondSection/SecondSection';
 import ThirdSection from '../../Components/ThirdSection/ThirdSection';
 import FeedBackSection from '../../Components/FeedBackSection/FeedBackSection';
 import Footer from '../../Components/Footer/Footer';
+import HamburgerButton from '../../common/HamburgerMenu/HamburgerButton/HamburgerButton';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <ThirdSection />
       <FeedBackSection />
       <Footer />
+      <HamburgerButton open={true} />
     </div>
   );
 };
