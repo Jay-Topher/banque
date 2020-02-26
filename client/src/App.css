@@ -2,3 +2,12 @@
   display: flex;
   align-items: center;
 }
+
+.container-fluid {
+  max-width: 1440px;
+  width: 100%;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  margin-right: auto;
+  margin-left: auto;
+}

@@ -1,0 +1,28 @@
+@import '../../utils/variables';
+
+.footer {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  &-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    border-top: 0.5px solid rgba($text-color, 0.35);
+
+    .footer-links {
+      margin-top: 2rem;
+      text-align: center;
+
+      a {
+        text-decoration: none;
+        color: $temp-blue;
+      }
+
+      & :first-child {
+        margin-right: 0.5rem;
+      }
+      & :last-child {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
