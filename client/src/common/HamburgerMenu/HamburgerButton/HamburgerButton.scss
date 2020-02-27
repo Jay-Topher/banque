@@ -1,0 +1,67 @@
+@import '../../../utils/variables';
+
+.hamburger {
+  position: absolute;
+  // position: sticky;
+  top: 5%;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 2rem;
+  width: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+
+  @media only screen and (min-width: 650px) {
+    display: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.open {
+    div {
+      background: #fff;
+    }
+    :first-child {
+      transform: rotate(45deg); /*here*/
+    }
+
+    :nth-child(2) {
+      opacity: 0; /*here*/
+      transform: translateX(20px); /*here*/
+    }
+
+    :nth-child(3) {
+      transform: rotate(-45deg); /*here*/
+    }
+  }
+
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background: #273152; /*here*/
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+
+    :first-child {
+      transform: rotate(0); /*here*/
+    }
+
+    :nth-child(2) {
+      opacity: 1; /*here*/
+      transform: translateX(0); /*here*/
+    }
+
+    :nth-child(3) {
+      transform: rotate(0); /*here*/
+    }
+  }
+}
