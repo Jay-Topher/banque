@@ -17,7 +17,7 @@ const Home = () => {
         <HamburgerButton open={open} setOpen={() => setOpen(!open)} />
         <HamburgerNav open={open} />
       </div>
-      <Navbar open={open} />
+      <Navbar />
       <FirstSection />
       <SecondSection />
       <ThirdSection />
