@@ -10,8 +10,8 @@ function StatementDetailView({ user }: IState) {
       <h2>Account Statement</h2>
       <p>Your account statement</p>
       <div className="statement-view-grid">
-        <div className="statement-heading-select">
-          <select>
+        <div className="account-heading-select">
+          <select className="select-menu">
             <option value="Select Account">Select Account</option>
             <option value="Savings Account">Savings Account</option>
             <option value="Current Account">Current Account</option>
