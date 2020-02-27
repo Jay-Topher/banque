@@ -26,6 +26,71 @@
   }
 }
 
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+}
+.page-item {
+  list-style: none;
+}
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+.page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  border: 1px solid #dee2e6;
+  color: #2e4fef;
+  background-color: #fff;
+  text-decoration: none;
+}
+.page-link:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #2e4fef;
+  border-color: #2e4fef;
+}
+.no__transaction {
+  text-align: center;
+  margin-top: 2rem;
+}
+.download__btn {
+  background-color: #2e4fef;
+  // padding:0.1em 0.5em;
+  width: 7rem;
+  height: 2rem;
+  border-radius: 50px;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+}
+.download__btn:hover {
+  background-color: #fff;
+  color: #2e4fef;
+  border: 1px solid #2e4fef;
+}
+.download__btn:focus {
+  outline: none;
+}
 @media (min-width: 700px) {
   .account-history {
     grid-row: 2 / span 2;

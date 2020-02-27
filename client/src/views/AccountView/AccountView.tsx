@@ -17,7 +17,7 @@ function AccountView({ user }: IState) {
           <div className="account-heading">
             <div className="account-heading-text">Account Information</div>
             <div className="account-heading-select">
-              <select>
+              <select className="select-menu">
                 <option value="Select Account">Select Account</option>
                 <option value="Savings Account">Savings Account</option>
                 <option value="Current Account">Current Account</option>
