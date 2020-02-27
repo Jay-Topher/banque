@@ -79,9 +79,4 @@ function LoginForm(props: any) {
 const mapStateToProps = (state: IState) => ({
   isAuthenticated: state.user.isAuthenticated,
 });
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { authLogin },
-  )(LoginForm),
-);
+export default withRouter(connect(mapStateToProps, { authLogin })(LoginForm));

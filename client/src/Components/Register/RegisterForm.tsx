@@ -181,9 +181,4 @@ const mapStateToProps = (state: IState) => ({
   isAuthenticated: state.user.isAuthenticated,
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { register },
-  )(RegisterForm),
-);
+export default withRouter(connect(mapStateToProps, { register })(RegisterForm));
