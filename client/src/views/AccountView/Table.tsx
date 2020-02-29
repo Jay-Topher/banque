@@ -1,6 +1,6 @@
 import React from 'react';
 import { IMiniHistoryProp } from '../../react-app-env';
-import { currencyFormat } from '../../utils/helpers';
+import { currencyFormat, dateFormat } from '../../utils/helpers';
 
 export default function Table({ transactions }: IMiniHistoryProp) {
   return (
@@ -16,7 +16,7 @@ export default function Table({ transactions }: IMiniHistoryProp) {
       <tbody>
         {transactions.map((transaction: any) => (
           <tr>
-            <td>{transaction.transactionDate}</td>
+            <td>{dateFormat(transaction.transactionDate)}</td>
             <td>{currencyFormat(transaction.transactionAmount)}</td>
             <td>{transaction.transactionType}</td>
             <td>{transaction.description}</td>
