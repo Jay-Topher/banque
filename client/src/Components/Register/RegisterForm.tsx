@@ -8,7 +8,7 @@ import { IState } from '../../react-app-env';
 const RegisterForm = (props: any) => {
   useEffect(() => {
     if (props.isAuthenticated) {
-      props.history.push('/user');
+      props.history.push('/dashboard');
     }
   }, [props.isAuthenticated, props.history]);
 
@@ -181,4 +181,9 @@ const mapStateToProps = (state: IState) => ({
   isAuthenticated: state.user.isAuthenticated,
 });
 
-export default withRouter(connect(mapStateToProps, { register })(RegisterForm));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { register },
+  )(RegisterForm),
+);
