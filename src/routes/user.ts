@@ -27,6 +27,7 @@ import {
   viewATransaction,
   addTransaction,
 } from '../controllers/transactions';
+import { sendRegistrationSuccessful } from '../controllers/mail';
 
 const router = Router();
 
@@ -148,6 +149,12 @@ router.post('/', async (req, res) => {
       accountNumber: userAccount.accountNumber,
       accountBalance: userAccount.accountBalance,
     };
+
+    sendRegistrationSuccessful(
+      email,
+      `${firstName.toUpperCase()} ${lastName.toUpperCase()}`,
+      newAccount.accountNumber,
+    );
 
     const payload = {
       user: {
