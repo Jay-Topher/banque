@@ -54,6 +54,12 @@
   outline: none;
   font-size: 0.7rem;
   background-color: inherit;
+  /* Appearance will hide the default arrow */
+  /* But kind of quirky and best to include the browser prefix */
+  // appearance: none;
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+
   // position: absolute;
   // opacity: 0;
   // background-color: #fff;
@@ -64,4 +70,12 @@
   // color: rgba(10, 46, 101, 0.5);
   // transition: color 0.3s ease;
   // left: 12px;
+}
+
+/* This will add our own custom arrow */
+/* But another quirk with :after not working on select elements */
+/* So we add it to a label instead */
+/* check out https://www.toptal.com/designers/htmlarrows/ for more HTML symbols */
+.select-menu:after {
+  content: '\25bc';
 }
