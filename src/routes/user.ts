@@ -19,6 +19,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
+  getAccountOwner,
 } from '../controllers/user';
 import auth, { IReq } from '../middleware/auth';
 import adminAuth from '../middleware/adminAuth';
@@ -27,7 +28,10 @@ import {
   viewATransaction,
   addTransaction,
 } from '../controllers/transactions';
-import { sendRegistrationSuccessful } from '../controllers/mail';
+import {
+  sendRegistrationSuccessful,
+  sendEmailAlert,
+} from '../controllers/helpers';
 
 const router = Router();
 
@@ -379,8 +383,9 @@ router.patch(
   '/:userId/accounts/:accountNumber/credit',
   auth,
   async (req: IReq, res) => {
-    const amount = req.body.amount;
+    const { amount, description } = req.body;
     const { userId, accountNumber } = req.params;
+
     if (userId !== req.user!.id) {
       res.status(401).json({ err: 'Unauthorized' });
 
@@ -388,7 +393,10 @@ router.patch(
     }
 
     try {
-      const accountToCredit = await getAccount(accountNumber);
+      const [accountToCredit, userToCredit] = await Promise.all([
+        getAccount(accountNumber),
+        getAUser(req.user!.id),
+      ]);
 
       if (!accountToCredit) {
         res.status(404).json({ err: 'Account not found' });
@@ -412,6 +420,17 @@ router.patch(
         transactionType: 'CREDIT',
         transactionAmount: Number(amount) * 100,
       });
+
+      sendEmailAlert(
+        userToCredit!.email,
+        userToCredit!.firstName,
+        userAccountNumber,
+        Number(amount),
+        'CREDIT',
+        credittedAccount.accountBalance,
+        description,
+        new Date(),
+      );
 
       res.status(200).json({ credittedAccount, newTransaction });
 
@@ -450,6 +469,8 @@ router.patch(
 
       if (!authorized) {
         res.status(400).json({ msg: 'Incorrect Pin' });
+
+        return;
       }
 
       if (!accountToDebit) {
@@ -460,6 +481,12 @@ router.patch(
 
       if (!accountExists) {
         res.status(401).json({ msg: 'Invalid account number' });
+
+        return;
+      }
+
+      if (!userInfo) {
+        res.status(404).json({ err: 'User does not exist' });
 
         return;
       }
@@ -499,6 +526,41 @@ router.patch(
           description,
         }),
       ]);
+
+      // debit alert
+      const email = userInfo!.email;
+      const firstName = userInfo!.firstName;
+      sendEmailAlert(
+        email,
+        firstName,
+        debittedAccount.accountNumber,
+        Number(amount),
+        'DEBIT',
+        debittedAccount.accountBalance,
+        description,
+        new Date(),
+      );
+
+      // credit alert
+      const credittedUser = await getAccountOwner(
+        credittedAccount.accountNumber,
+      );
+      if (!credittedUser) {
+        res.status(404).json({ err: 'Could not send credit mail' });
+        return;
+      }
+      const creditEmail = credittedUser.email;
+      const creditFirstName = credittedUser.firstName;
+      sendEmailAlert(
+        creditEmail,
+        creditFirstName,
+        credittedAccount.accountNumber,
+        Number(amount),
+        'CREDIT',
+        credittedAccount.accountBalance,
+        description,
+        new Date(),
+      );
 
       res.status(200).json({
         debittedAccount,
