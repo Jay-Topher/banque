@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { sendRegistrationSuccessful } from '../controllers/mail';
+import { sendRegistrationSuccessful } from '../controllers/helpers';
 
 const router = Router();
 
