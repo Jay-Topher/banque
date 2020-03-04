@@ -1,13 +1,17 @@
+import { TRANSFER_FAIL } from './../actions/types';
+import { IUserState } from './../../react-app-env.d';
 import {
   REGISTER_SUCCESS,
   USER_LOADED,
   AUTH_START,
   AUTH_SUCCESS,
   AUTH_FAIL,
+  TRANSFER_START,
+  TRANSFER_SUCCESS,
 } from '../actions/types';
 import { IAction } from '../../react-app-env';
 
-const initialState = {
+const initialState: IUserState = {
   token: localStorage.getItem('token'),
   user: null,
   account: null,
@@ -45,6 +49,20 @@ export default (state = initialState, action: IAction) => {
       return {
         ...state,
         error: action.payload!.error,
+      };
+    case TRANSFER_START:
+      return {
+        ...state,
+      };
+    case TRANSFER_SUCCESS:
+      return {
+        ...state,
+        transactions: [...state.transactions, action.payload],
+      };
+    case TRANSFER_FAIL:
+      return {
+        ...state,
+        error: action.payload?.error,
       };
     default:
       return state;

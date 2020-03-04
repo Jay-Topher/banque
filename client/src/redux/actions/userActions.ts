@@ -10,7 +10,7 @@ import { Dispatch } from 'redux';
 import setAuthToken from '../../utils/setAuthToken';
 
 // load user
-const loadUser = () => async (dispatch: Dispatch) => {
+export const loadUser = () => async (dispatch: Dispatch) => {
   // @todo -load token into global headers
   if (localStorage.token) {
     setAuthToken(localStorage.token);

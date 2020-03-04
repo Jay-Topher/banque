@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  banque:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: banque
+      MONGO_INITDB_ROOT_USERNAME: banque
+      MONGO_INITDB_ROOT_PASSWORD: banque
+    ports:
+      - '27017:27017'
+  # mongoadmin:
+  #   image: admin/mongoadmin
+  #   environment:
+  #     MONGOADMIN_DEFAULT_EMAIL: db@decagon.central
+  #     MONGOADMIN_DEFAULT_PASSWORD: decagon
+  #   restart: always
+  #   ports:
+  #     - 8080:80

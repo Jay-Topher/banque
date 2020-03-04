@@ -1,7 +1,7 @@
 $temp-green: #52d267;
 $temp-blue: #2e4fef;
 
-.login {
+.transfer {
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: 1fr;
@@ -30,23 +30,17 @@ $temp-blue: #2e4fef;
       border: 1px solid $temp-blue;
       box-shadow: 0 0 0.2rem rgba($color: $temp-blue, $alpha: 0.5);
     }
-
-    &.email {
+    &.transfer-amount {
       grid-column: 1 / -1;
     }
-    &.password {
+    &.transfer-account {
       grid-column: 1 / -1;
     }
-  }
-}
-
-.info {
-  margin-top: 1rem;
-  text-align: center;
-  letter-spacing: 0.5px;
-
-  .login1 {
-    text-decoration: none;
-    font-weight: 700;
+    &.description {
+      grid-column: 1 / -1;
+    }
+    &.pin {
+      grid-column: 1 / -1;
+    }
   }
 }

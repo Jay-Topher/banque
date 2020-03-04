@@ -104,7 +104,7 @@ export default {
     },
     {
       comment:
-        'Banque has made my transactions seamless, great customer service and free transfers. Definitely mu app of the year. Thanks Banque!',
+        'Banque has made my transactions seamless, great customer service and free transfers. Definitely my app of the year. Thanks Banque!',
       avi:
         'https://res.cloudinary.com/winter-cake/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:262c35/v1582531963/banque/jennifer_fritz_ixhnlt.jpg',
       name: 'Jennifer Fritz',

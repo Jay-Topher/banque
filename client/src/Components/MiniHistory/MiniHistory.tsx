@@ -6,12 +6,13 @@ import { IMiniHistoryProp } from '../../react-app-env';
 const MiniHistory = ({ transactions }: IMiniHistoryProp) => {
   return (
     <div className="mini-history">
-      {transactions.map(transaction => (
-        <MiniHistoryItem
-          amount={transaction.transactionAmount}
-          description={transaction.description}
-        />
-      ))}
+      {transactions &&
+        transactions.map(transaction => (
+          <MiniHistoryItem
+            amount={transaction.transactionAmount}
+            description={transaction.description}
+          />
+        ))}
     </div>
   );
 };
