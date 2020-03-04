@@ -119,5 +119,4 @@ export const sendRegistrationSuccessful = (
 // CREDIT ALERT
 
 // DEBIT ALERT
-
 export default sendMail;
