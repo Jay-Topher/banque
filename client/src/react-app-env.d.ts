@@ -34,6 +34,19 @@ export interface IAction extends Action {
   };
 }
 
+export interface IUserTransaction extends Action {
+  payload?: {
+    benefactor: string;
+    transactionType: string;
+    description?: string;
+    transactionAmount: number;
+    transactionPin: string;
+    transactionDate: Date;
+    loading: boolean;
+    error?: string;
+  };
+}
+
 export interface IMenuProp {
   icon: string;
   title: string;
@@ -91,7 +104,7 @@ export interface IUser {
 
 export interface IUserAccount {
   accountNumber: string;
-  accountBalance: number;
+  accountBalance: number | any;
 }
 
 export interface ITransaction {
@@ -104,4 +117,11 @@ export interface ITransaction {
 
 export interface IMiniHistoryProp {
   transactions: ITransaction[];
+}
+
+export interface ITransferProp {
+  accountNumber: string;
+  description?: string;
+  amount: number;
+  pin: string;
 }
