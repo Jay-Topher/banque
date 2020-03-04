@@ -440,11 +440,6 @@ router.patch(
         checkAccount(accountNumber),
         getAUser(userId),
       ]);
-      // const accountToDebit = await getAccount(userAccountNumber)
-
-      // const accountExists = await checkAccount(accountNumber)
-
-      // const userInfo = await getAUser(userId)
 
       const authorized = await bcrypt.compare(pin, userInfo!.pin);
 
