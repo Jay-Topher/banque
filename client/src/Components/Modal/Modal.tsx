@@ -1,7 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import './Modal.scss';
 
-const Modal = ({ children }: { children?: JSX.Element | JSX.Element[] }) => {
+const Modal = ({
+  children,
+  buttonLabel,
+}: {
+  children?: JSX.Element | JSX.Element[];
+  buttonLabel: string;
+}) => {
   const [open, setOpen] = useState(false);
 
   const escClose = useCallback((event: KeyboardEvent) => {
@@ -19,7 +25,7 @@ const Modal = ({ children }: { children?: JSX.Element | JSX.Element[] }) => {
   }, []);
   return (
     <div>
-      <button onClick={() => setOpen(true)}>Open Modal</button>
+      <button onClick={() => setOpen(true)}>{buttonLabel}</button>
       <div
         className={`modal-bg ${open ? 'open' : 'close'}`}
         onClick={() => setOpen(false)}

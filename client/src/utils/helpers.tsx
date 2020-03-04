@@ -5,5 +5,5 @@ export const currencyFormat = (num: number) => {
 };
 
 export const dateFormat = (date: string) => {
-  return format(new Date(date), 'DD-MMMM-YYYY');
+  return format(new Date(date), 'do-MMMM-yyyy');
 };
