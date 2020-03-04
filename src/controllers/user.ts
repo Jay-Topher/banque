@@ -1,4 +1,5 @@
 import Users from '../models/users';
+import Accounts from '../models/accounts';
 
 interface userDetails {
   firstName: string;
@@ -16,6 +17,14 @@ export async function getAllUsers() {
 
 export async function getAUser(userId: string) {
   return await Users.findOne({ _id: userId, deletedAt: null });
+}
+
+export async function getAccountOwner(accountNumber: string) {
+  const account = await Accounts.findOne({ accountNumber, deletedAt: null });
+
+  if (!account) throw Error('Account does not exist');
+
+  return await Users.findOne({ _id: account.user, deletedAt: null });
 }
 
 export async function createUser(userObj: userDetails) {

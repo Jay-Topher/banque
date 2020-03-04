@@ -105,3 +105,11 @@ export interface ITransaction {
 export interface IMiniHistoryProp {
   transactions: ITransaction[];
 }
+
+export interface ITransferHistory {
+  transactionDate: Date | string;
+  transactionAmount: number;
+  benefactor: string;
+  transactionType: string;
+  description?: string;
+}

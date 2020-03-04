@@ -116,8 +116,84 @@ export const sendRegistrationSuccessful = (
 };
 
 // @TODO
-// CREDIT ALERT
+// CREDIT ALERT & DEBIT ALERT
+export const sendEmailAlert = (
+  email: string,
+  firstName: string,
+  accountNumber: string,
+  amount: number,
+  type: string,
+  accountBalance: number,
+  description: string,
+  date: Date,
+) => {
+  const subject = 'Payment Notification';
+  const message = `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      td {
+        padding: 5px 10px;
+        height: 30px;
+      }
+      .one {
+        background-color: #cccccc;
+        width: 40%;
+      }
+      .two {
+        background-color: rgb(129, 186, 236);
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+    <p style="text-transform: capitalize">Dear ${firstName},</p>
+    <p>Thanks for banqing with us, here is a summary of your most recent transaction</p>
+    <table cellspacing="0" style="width:90%;">
+      <tr style="border: 1px solid green;">
+        <td class="one">Date/Time:</td>
+        <td class="two">${date}</td>
+      </tr>
+      <tr>
+        <td class="one">Account Number:</td>
+        <td class="two">${hideAccountNumber(accountNumber)}</td>
+      </tr>
+      <tr>
+        <td class="one">Description:</td>
+        <td class="two">${description}</td>
+      </tr>
+      <tr>
+        <td class="one">Amount:</td>
+        <td class="two">${currencyFormat(amount * 100)}</td>
+      </tr>
+      <tr>
+        <td class="one">Credit/Debit:</td>
+        <td class="two">${type}</td>
+      </tr>
+      <tr style="background-color: red; color: white; font-weight: bold;">
+        <td>Account Balance</td>
+        <td>${currencyFormat(accountBalance)}</td>
+      </tr>
+    </table>
+    <p>Regards,</p>
+    <p>The Banque Team.</p>
+  </body>
+  </html>`;
 
-// DEBIT ALERT
+  sendMail(email, subject, message);
+};
+
+export function hideAccountNumber(accountNumber: string) {
+  return accountNumber
+    .split('')
+    .map((a, i) => (i <= 6 ? 'X' : a))
+    .join('');
+}
+
+export const currencyFormat = (num: number) => {
+  return '₦' + (num / 100).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};
 
 export default sendMail;
