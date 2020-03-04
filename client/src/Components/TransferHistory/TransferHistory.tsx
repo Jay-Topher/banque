@@ -2,8 +2,13 @@ import React from 'react';
 import './TransferHistory.scss';
 import Card from '../Card/Card';
 import { currencyFormat } from '../../utils/helpers';
+import { ITransferHistory } from '../../react-app-env';
 
-const TransferHistory = () => {
+const TransferHistory = ({
+  transactionHistory,
+}: {
+  transactionHistory: ITransferHistory[];
+}) => {
   return (
     <Card addClass="v-small transfer-history">
       <div className="table-heading">
@@ -24,13 +29,15 @@ const TransferHistory = () => {
           <th>Transfer Type</th>
           <th>Description</th>
         </tr>
-        <tr>
-          <td>{Date.now()}</td>
-          <td>{currencyFormat(5000)}</td>
-          <td>{'0015252594'}</td>
-          <td>{'CREDIT'}</td>
-          <td>{'School fees'}</td>
-        </tr>
+        {transactionHistory.map((transaction, index) => (
+          <tr key={`${transaction.benefactor}${index}`}>
+            <td>{transaction.transactionDate}</td>
+            <td>{currencyFormat(transaction.transactionAmount)}</td>
+            <td>{transaction.benefactor}</td>
+            <td>{transaction.transactionType}</td>
+            <td>{transaction.description || '-'}</td>
+          </tr>
+        ))}
       </table>
     </Card>
   );
