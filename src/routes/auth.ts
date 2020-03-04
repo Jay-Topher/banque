@@ -11,12 +11,6 @@ import auth from '../middleware/auth';
 
 const router = Router();
 
-// interface IReq extends Request {
-//   user: {
-//     id: string
-//   }
-// }
-
 /**
  * @route GET api/auth
  * @description GET logged in user
@@ -29,7 +23,7 @@ router.get('/', auth, async (req: any, res: Response) => {
       await Users.findById({
         _id: req.user.id,
         deletedAt: null,
-      }).select('-password -pin -_id -__v -isAdmin'),
+      }).select('-password -pin -__v -isAdmin'),
       await Accounts.findOne({
         user: req.user.id,
         deletedAt: null,
