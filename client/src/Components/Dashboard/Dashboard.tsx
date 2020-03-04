@@ -20,9 +20,13 @@ const Dashboard = ({ user }: IState) => {
       <div className="main-content">
         <Card addClass="v-small main-summary">
           <UserDetails
-            accountBalance={currencyFormat(user.account?.accountBalance)}
-            accountName={`${user.user?.firstName} ${user.user?.lastName}`}
-            accountNumber={user.account?.accountNumber}
+            accountBalance={
+              user.account
+                ? currencyFormat(user.account!.accountBalance)
+                : 'loading...'
+            }
+            accountName={`${user.user!.firstName} ${user.user!.lastName}`}
+            accountNumber={user.account!.accountNumber}
           />
         </Card>
 

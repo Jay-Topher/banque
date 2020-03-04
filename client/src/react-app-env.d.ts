@@ -125,3 +125,11 @@ export interface ITransferProp {
   amount: number;
   pin: string;
 }
+
+export interface ITransferHistory {
+  transactionDate: Date | string;
+  transactionAmount: number;
+  benefactor: string;
+  transactionType: string;
+  description?: string;
+}
