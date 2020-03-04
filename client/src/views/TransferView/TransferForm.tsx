@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './TransferForm.scss';
 import Button from '../../Components/Button/Button';
 import { styleButton } from '../../Components/Login/style';
-import { userTransferAction } from '../../redux/actions/transactionActions';
+import { userTransferAction } from '../../redux/actions/transferActions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const TransferForm = () => {
