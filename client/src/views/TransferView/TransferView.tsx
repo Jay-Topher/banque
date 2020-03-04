@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import FrequentTransfers from '../../Components/FrequentTransfers/FrequentTransfers';
 import TransferHistory from '../../Components/TransferHistory/TransferHistory';
 import Icon from '../../Icomoon/icon';
+import { useSelector } from 'react-redux';
+import { IUserState, IState } from '../../react-app-env';
 
 const TransferView = () => {
+  const transferData = useSelector((state: IState) => state.user.transactions);
+  // console.log(transferData)
   return (
     <div className="transfer-view">
       <h2>Transfers</h2>
@@ -22,7 +26,7 @@ const TransferView = () => {
           </Link>
         </Card>
         <FrequentTransfers />
-        <TransferHistory />
+        <TransferHistory transactionHistory={transferData} />
       </div>
     </div>
   );
