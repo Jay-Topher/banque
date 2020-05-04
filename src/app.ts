@@ -4,6 +4,7 @@ import path from 'path';
 import logger from 'morgan';
 import graphqlHTTP from 'express-graphql';
 import cors from 'cors';
+import fs from 'fs';
 
 import indexRouter from './routes/index';
 import userRouter from './routes/user';
@@ -40,6 +41,16 @@ app.use(
     graphiql: true,
   }),
 );
+
+// render client side if route not in backend
+const clientPath = path.join(__dirname, '../', 'client/build');
+
+if (fs.existsSync(clientPath)) {
+  app.use(express.static(clientPath));
+  app.get('/*', (_req, res) => {
+    res.sendfile(path.join(clientPath, 'index.html'));
+  });
+}
 
 // catch 404 and forward to error handler
 app.use(function(_req, _res, next) {
